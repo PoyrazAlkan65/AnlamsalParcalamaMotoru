@@ -1,0 +1,31 @@
+# UI
+streamlit>=1.36
+
+# PDF
+pymupdf>=1.24
+
+# Image OCR + caption
+pytesseract>=0.3.10
+pillow>=10.0
+
+# Audio / Video transcription
+faster-whisper>=1.0
+yt-dlp>=2025.1
+
+# Web extraction
+trafilatura>=1.12
+playwright>=1.45
+beautifulsoup4>=4.12
+
+# Text
+chardet>=5.2
+
+# ML / Embeddings
+torch>=2.3
+transformers>=4.44
+sentence-transformers>=3.0
+chonkie[semantic]>=0.2
+
+# Storage / serialization
+pyarrow>=16
+numpy>=1.26
