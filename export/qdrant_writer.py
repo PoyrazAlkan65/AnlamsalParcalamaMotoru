@@ -1,7 +1,8 @@
-"""Qdrant point şemasında JSONL + Parquet yazıcı."""
+"""Qdrant point şemasında JSONL + Parquet yazıcı ve Qdrant sunucusuna otomatik yükleme."""
 from __future__ import annotations
 
 import json
+import logging
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
@@ -10,8 +11,150 @@ import numpy as np
 
 import config
 from core.types import Chunk, Document, QdrantPoint
+
 from core.utils import safe_filename, stable_chunk_id
 
+logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# Qdrant client singleton
+# ---------------------------------------------------------------------------
+_qdrant_client = None
+
+
+def get_qdrant_client():
+    """Qdrant client singleton — ilk çağrıda bağlanır, sonrakilerde aynı nesneyi döner."""
+    global _qdrant_client
+    if _qdrant_client is not None:
+        return _qdrant_client
+
+    if not config.QDRANT_ENABLED:
+        return None
+
+    try:
+        from qdrant_client import QdrantClient
+
+        url = f"http://{config.QDRANT_HOST}:{config.QDRANT_PORT}"
+        kwargs = {
+            "url": url,
+            "timeout": 30,
+        }
+        if config.QDRANT_API_KEY:
+            kwargs["api_key"] = config.QDRANT_API_KEY
+
+        _qdrant_client = QdrantClient(**kwargs)
+        # Bağlantı testi
+        _qdrant_client.get_collections()
+        logger.info("Qdrant bağlantısı kuruldu: %s:%s", config.QDRANT_HOST, config.QDRANT_PORT)
+        return _qdrant_client
+
+    except Exception as exc:
+        logger.error("Qdrant bağlantı hatası: %s", exc)
+        _qdrant_client = None
+        return None
+
+
+def ensure_collection(collection_name: str | None = None, vector_size: int | None = None) -> bool:
+    """Collection yoksa oluşturur. Başarılıysa True döner."""
+    client = get_qdrant_client()
+    if client is None:
+        return False
+
+    collection_name = collection_name or config.QDRANT_COLLECTION
+    vector_size = vector_size or config.EMBEDDING_DIM
+
+    try:
+        from qdrant_client.models import Distance, VectorParams
+
+        collections = [c.name for c in client.get_collections().collections]
+        if collection_name in collections:
+            logger.info("Collection zaten mevcut: %s", collection_name)
+            return True
+
+        client.create_collection(
+            collection_name=collection_name,
+            vectors_config=VectorParams(
+                size=vector_size,
+                distance=Distance.COSINE,
+            ),
+        )
+        logger.info("Collection oluşturuldu: %s (dim=%d)", collection_name, vector_size)
+        return True
+
+    except Exception as exc:
+        logger.error("Collection oluşturma hatası: %s", exc)
+        return False
+
+
+def upsert_to_qdrant(
+    points: list[QdrantPoint],
+    collection_name: str | None = None,
+    batch_size: int = 64,
+) -> dict:
+    """
+    QdrantPoint listesini sunucuya yükler.
+
+    Returns:
+        {"success": bool, "upserted": int, "error": str | None}
+    """
+    collection_name = collection_name or config.QDRANT_COLLECTION
+    result = {"success": False, "upserted": 0, "error": None}
+
+    if not config.QDRANT_ENABLED:
+        result["error"] = "Qdrant devre dışı (QDRANT_ENABLED=false)"
+        return result
+
+    client = get_qdrant_client()
+    if client is None:
+        result["error"] = "Qdrant bağlantısı kurulamadı"
+        return result
+
+    if not ensure_collection(collection_name):
+        result["error"] = f"Collection oluşturulamadı: {collection_name}"
+        return result
+
+    if not points:
+        result["success"] = True
+        return result
+
+    try:
+        from qdrant_client.models import PointStruct
+
+        # Batch olarak yükle
+        total = 0
+        for i in range(0, len(points), batch_size):
+            batch = points[i : i + batch_size]
+            qdrant_points = [
+                PointStruct(
+                    id=pt.id,
+                    vector=pt.vector,
+                    payload=pt.payload,
+                )
+                for pt in batch
+            ]
+            client.upsert(
+                collection_name=collection_name,
+                points=qdrant_points,
+            )
+            total += len(batch)
+            logger.info("Qdrant upsert: %d / %d", total, len(points))
+
+        result["success"] = True
+        result["upserted"] = total
+        logger.info(
+            "Qdrant yükleme tamamlandı: %d point → %s", total, collection_name
+        )
+
+    except Exception as exc:
+        result["error"] = str(exc)
+        logger.error("Qdrant upsert hatası: %s", exc)
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Point oluşturma (mevcut)
+# ---------------------------------------------------------------------------
 
 def build_points(
     document: Document,
@@ -84,6 +227,10 @@ def _find_parent_segment(chunk: Chunk, lookup, document: Document) -> dict:
     closest = min(lookup, key=lambda t: abs((t[0] + t[1]) // 2 - mid))
     return closest[2]
 
+
+# ---------------------------------------------------------------------------
+# Dosya çıktıları (mevcut)
+# ---------------------------------------------------------------------------
 
 def write_outputs(
     document: Document,

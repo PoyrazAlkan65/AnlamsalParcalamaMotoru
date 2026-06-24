@@ -12,7 +12,7 @@ from .base import Loader
 class TextLoader(Loader):
     source_type = "text"
 
-    def load(self, source: str) -> Document:
+    def load(self, source: str, whisper_language: str | None = None) -> Document:
         path = Path(source)
         text, encoding = read_text_file(path)
         return Document(

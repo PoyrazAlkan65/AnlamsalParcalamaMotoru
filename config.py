@@ -4,6 +4,11 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+# .env dosyasını yükle (proje kökünde aranır)
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
 ROOT_DIR = Path(__file__).resolve().parent
 DATA_DIR = ROOT_DIR / "data"
 INPUTS_DIR = DATA_DIR / "inputs"
@@ -41,3 +46,10 @@ WEB_USER_AGENT = (
     "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 )
 PLAYWRIGHT_TIMEOUT_MS = int(os.getenv("PLAYWRIGHT_TIMEOUT_MS", "30000"))
+
+# ---- Qdrant ----
+QDRANT_HOST = os.getenv("QDRANT_HOST")
+QDRANT_PORT = int(os.getenv("QDRANT_PORT"))
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
+QDRANT_COLLECTION = os.getenv("QDRANT_COLLECTION")
+QDRANT_ENABLED = os.getenv("QDRANT_ENABLED", "true").lower() in ("1", "true", "yes")

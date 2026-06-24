@@ -29,3 +29,10 @@ chonkie[semantic]>=0.2
 # Storage / serialization
 pyarrow>=16
 numpy>=1.26
+
+# Qdrant vector database
+qdrant-client>=1.9
+
+# Environment
+python-dotenv>=1.0
+

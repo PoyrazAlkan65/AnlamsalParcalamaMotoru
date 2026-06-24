@@ -13,7 +13,7 @@ from .base import Loader
 class YouTubeLoader(Loader):
     source_type = "youtube"
 
-    def load(self, source: str) -> Document:
+    def load(self, source: str, whisper_language: str | None = None) -> Document:
         try:
             import yt_dlp
         except ImportError as e:
@@ -50,7 +50,7 @@ class YouTubeLoader(Loader):
             if wav is None:
                 raise RuntimeError("yt-dlp ses indirilemedi")
 
-            text, lang, segments = engine.transcribe(wav)
+            text, lang, segments = engine.transcribe(wav, language=whisper_language)
 
         return Document(
             text=text,

@@ -12,5 +12,5 @@ class Loader(ABC):
     source_type: str = "unknown"
 
     @abstractmethod
-    def load(self, source: str) -> Document:
+    def load(self, source: str, whisper_language: str | None = None) -> Document:
         ...

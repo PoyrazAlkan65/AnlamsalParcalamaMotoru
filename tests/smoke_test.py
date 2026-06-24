@@ -98,3 +98,31 @@ def test_pdf_loader_smoke():
     doc = PDFLoader().load(str(fx))
     assert doc.source_type == "pdf"
     assert doc.extra["page_count"] >= 1
+
+
+def test_bilingual_chunking():
+    from processing.chunker import chunk_text
+    
+    # Türkçe test metni
+    tr_text = (
+        "Yapay zeka teknolojileri son yıllarda büyük bir hızla gelişmektedir. "
+        "Bu gelişmeler, birçok sektörde devrim niteliğinde değişikliklere yol açmaktadır. "
+        "Özellikle doğal dil işleme alanındaki yenilikler dikkat çekicidir.\n\n"
+        "Diğer yandan, makine öğrenmesi algoritmaları da sürekli olarak optimize edilmektedir. "
+        "Veri analitiği süreçleri bu sayede daha verimli hale gelmektedir."
+    )
+    tr_chunks = chunk_text(tr_text)
+    assert len(tr_chunks) > 0
+    assert any("Yapay zeka" in c.text for c in tr_chunks)
+    
+    # İngilizce test metni
+    en_text = (
+        "Artificial intelligence technologies have been developing rapidly in recent years. "
+        "These developments lead to revolutionary changes in many industries. "
+        "Particularly, innovations in natural language processing are remarkable.\n\n"
+        "On the other hand, machine learning algorithms are also being continuously optimized. "
+        "Data analytics processes become more efficient as a result."
+    )
+    en_chunks = chunk_text(en_text)
+    assert len(en_chunks) > 0
+    assert any("Artificial intelligence" in c.text for c in en_chunks)

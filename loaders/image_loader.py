@@ -84,7 +84,7 @@ def _run_ocr(pil_image) -> tuple[str, float]:
 class ImageLoader(Loader):
     source_type = "image"
 
-    def load(self, source: str) -> Document:
+    def load(self, source: str, whisper_language: str | None = None) -> Document:
         from PIL import Image
 
         path = Path(source)

@@ -12,7 +12,7 @@ from .base import Loader
 class WebLoader(Loader):
     source_type = "web"
 
-    def load(self, source: str) -> Document:
+    def load(self, source: str, whisper_language: str | None = None) -> Document:
         text, title, used = self._try_trafilatura(source)
 
         if not text or len(text) < 80:

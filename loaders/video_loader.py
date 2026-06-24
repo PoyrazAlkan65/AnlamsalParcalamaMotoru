@@ -38,14 +38,14 @@ def extract_audio(video_path: Path, dst_wav: Path) -> None:
 class VideoLoader(Loader):
     source_type = "video"
 
-    def load(self, source: str) -> Document:
+    def load(self, source: str, whisper_language: str | None = None) -> Document:
         path = Path(source)
         engine = get_whisper()
 
         with tempfile.TemporaryDirectory(prefix="apm_video_") as tmp:
             wav = Path(tmp) / "audio.wav"
             extract_audio(path, wav)
-            text, lang, segments = engine.transcribe(wav)
+            text, lang, segments = engine.transcribe(wav, language=whisper_language)
 
         duration = segments[-1].end if segments else None
         return Document(

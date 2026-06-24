@@ -12,10 +12,10 @@ from .base import Loader
 class AudioLoader(Loader):
     source_type = "audio"
 
-    def load(self, source: str) -> Document:
+    def load(self, source: str, whisper_language: str | None = None) -> Document:
         path = Path(source)
         engine = get_whisper()
-        text, lang, segments = engine.transcribe(path)
+        text, lang, segments = engine.transcribe(path, language=whisper_language)
 
         duration = segments[-1].end if segments else None
 

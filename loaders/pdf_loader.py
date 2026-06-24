@@ -11,7 +11,7 @@ from .base import Loader
 class PDFLoader(Loader):
     source_type = "pdf"
 
-    def load(self, source: str) -> Document:
+    def load(self, source: str, whisper_language: str | None = None) -> Document:
         import fitz  # pymupdf
 
         path = Path(source)

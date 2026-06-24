@@ -47,7 +47,7 @@ with st.sidebar:
         min_value=0.1, max_value=0.95, step=0.05,
         value=config.CHUNK_SIMILARITY_THRESHOLD,
         key="sim_threshold",
-        help="Daha düşük = daha uzun parçalar",
+        help="Düşük eşik = daha az parça. Yüksek eşik =daha çok parça (agresif bölme).",
     )
     st.slider(
         "Min token",
@@ -94,13 +94,20 @@ def _run_one(source: str, status, label: str) -> IngestResult | None:
             status.update(label=f"{label} — {msg}", state="running")
 
     try:
-        result = ingest(source, progress=progress_cb)
+        result = ingest(
+            source,
+            progress=progress_cb,
+            similarity_threshold=st.session_state.get("sim_threshold"),
+            min_tokens=st.session_state.get("min_tokens"),
+            max_tokens=st.session_state.get("max_tokens"),
+        )
     except Exception as e:
         tb = traceback.format_exc(limit=4)
         st.session_state.errors.append({"source": source, "error": str(e), "trace": tb})
         status.update(label=f"{label} — HATA: {e}", state="error")
         return None
 
+    qdrant = result.qdrant_result or {}
     st.session_state.results.append({
         "source": source,
         "source_type": result.document.source_type,
@@ -112,8 +119,16 @@ def _run_one(source: str, status, label: str) -> IngestResult | None:
         "files": {k: str(v) for k, v in result.output_files.items()},
         "first_chunks": [c.text[:300] for c in result.chunks[:3]],
         "extra": result.document.extra,
+        "qdrant": qdrant,
     })
-    status.update(label=f"{label} — Tamam ({result.chunk_count} parça)", state="complete")
+
+    qdrant_label = ""
+    if qdrant.get("success"):
+        qdrant_label = f" · Qdrant ✓ ({qdrant.get('upserted', 0)} point)"
+    elif qdrant.get("error"):
+        qdrant_label = f" · Qdrant ✗"
+
+    status.update(label=f"{label} — Tamam ({result.chunk_count} parça{qdrant_label})", state="complete")
     return result
 
 
@@ -193,6 +208,13 @@ with tab_results:
                 meta_cols[0].caption(f"Dil: `{r['language'] or 'auto'}`")
                 meta_cols[1].caption(f"Toplam metin: {r['text_chars']:,} karakter")
                 meta_cols[2].caption(f"Çıktı: `{Path(r['files'].get('parquet', '')).name}`")
+
+                # Qdrant durumu
+                qdrant_info = r.get("qdrant", {})
+                if qdrant_info.get("success"):
+                    st.success(f"Qdrant ✓ — {qdrant_info.get('upserted', 0)} point yüklendi → `{config.QDRANT_COLLECTION}`")
+                elif qdrant_info.get("error"):
+                    st.warning(f"Qdrant ✗ — {qdrant_info['error']}")
 
                 with st.expander("İlk parçalar"):
                     for j, txt in enumerate(r["first_chunks"]):

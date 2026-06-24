@@ -36,8 +36,8 @@ def get_loader(source: str) -> Loader:
     raise ValueError(f"Desteklenmeyen kaynak tipi: {source!r}")
 
 
-def load(source: str) -> Document:
-    return get_loader(source).load(source)
+def load(source: str, whisper_language: str | None = None) -> Document:
+    return get_loader(source).load(source, whisper_language=whisper_language)
 
 
 __all__ = ["Loader", "get_loader", "load"]
