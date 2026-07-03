@@ -23,10 +23,22 @@ EMBEDDING_DIM = 1024
 EMBEDDING_BATCH = int(os.getenv("EMBEDDING_BATCH", "16"))
 
 # ---- Whisper ----
+# Supported simple names: 'turbo', 'large-v3', 'medium'
+WHISPER_AVAILABLE_MODELS = ["turbo", "large-v3", "medium"]
+# Map simple names to actual model identifiers (override via env if needed)
+WHISPER_MODEL_MAP = {
+    "turbo": os.getenv("WHISPER_MODEL_TURBO", "turbo"),
+    "large-v3": os.getenv("WHISPER_MODEL_LARGE_V3", "large-v3"),
+    "medium": os.getenv("WHISPER_MODEL_MEDIUM", "medium"),
+}
+# Choose one of the keys in WHISPER_AVAILABLE_MODELS. Default kept as large-v3 for
+# quality/compatibility balance. A benchmark script can be used to change this.
 WHISPER_MODEL = os.getenv("WHISPER_MODEL", "large-v3")
 WHISPER_COMPUTE_TYPE = os.getenv("WHISPER_COMPUTE_TYPE", "auto")
 WHISPER_DEVICE = os.getenv("WHISPER_DEVICE", "auto")
 WHISPER_LANGUAGE = os.getenv("WHISPER_LANGUAGE", "tr")
+# If set, some automation or scripts may run benchmarking across models.
+WHISPER_BENCHMARK = os.getenv("WHISPER_BENCHMARK", "false").lower() in ("1", "true", "yes")
 
 # ---- Image captioning ----
 CAPTION_MODEL = os.getenv("CAPTION_MODEL", "Salesforce/blip-image-captioning-large")
@@ -49,7 +61,7 @@ PLAYWRIGHT_TIMEOUT_MS = int(os.getenv("PLAYWRIGHT_TIMEOUT_MS", "30000"))
 
 # ---- Qdrant ----
 QDRANT_HOST = os.getenv("QDRANT_HOST")
-QDRANT_PORT = int(os.getenv("QDRANT_PORT"))
+QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 QDRANT_COLLECTION = os.getenv("QDRANT_COLLECTION")
 QDRANT_ENABLED = os.getenv("QDRANT_ENABLED", "true").lower() in ("1", "true", "yes")

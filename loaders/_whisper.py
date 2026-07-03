@@ -35,8 +35,12 @@ class WhisperEngine:
         if compute == "auto":
             compute = "float16" if device == "cuda" else "int8"
 
+        # Resolve the configured simple name to the actual model identifier
+        model_name = getattr(config, "WHISPER_MODEL_MAP", {}).get(
+            config.WHISPER_MODEL, config.WHISPER_MODEL
+        )
         self.model = WhisperModel(
-            config.WHISPER_MODEL,
+            model_name,
             device=device,
             compute_type=compute,
         )
