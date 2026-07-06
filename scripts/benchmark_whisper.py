@@ -12,8 +12,8 @@ import argparse
 import json
 import time
 from pathlib import Path
-import wave
-import contextlib
+# import wave
+# import contextlib
 
 import config
 
@@ -25,12 +25,12 @@ except Exception:
 from faster_whisper import WhisperModel
 
 
-def get_audio_duration(path: str) -> float:
-    """WAV dosyasının süresini saniye cinsinden döndürür."""
-    with contextlib.closing(wave.open(path, 'r')) as f:
-        frames = f.getnframes()
-        rate = f.getframerate()
-        return frames / float(rate)
+# def get_audio_duration(path: str) -> float:
+#     """WAV dosyasının süresini saniye cinsinden döndürür."""
+#     with contextlib.closing(wave.open(path, 'r')) as f:
+#         frames = f.getnframes()
+#         rate = f.getframerate()
+#         return frames / float(rate)
 
 
 def load_and_transcribe(model_id: str, audio_path: str, device: str, compute: str) -> dict:
@@ -45,7 +45,7 @@ def load_and_transcribe(model_id: str, audio_path: str, device: str, compute: st
     trans_time = time.time() - t1
     text = "\n".join(texts)
 
-    duration = get_audio_duration(str(audio_path))
+    duration = info.duration  # <-- artık dosya formatından bağımsız, faster-whisper veriyor
     out.update({
         "trans_time_s": trans_time,
         "audio_duration_s": duration,
