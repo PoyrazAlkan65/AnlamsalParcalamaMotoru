@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import tempfile
 from pathlib import Path
+from typing import Callable
 
 from core.types import Document
 
@@ -13,7 +14,12 @@ from .base import Loader
 class YouTubeLoader(Loader):
     source_type = "youtube"
 
-    def load(self, source: str, whisper_language: str | None = None) -> Document:
+    def load(
+        self,
+        source: str,
+        whisper_language: str | None = None,
+        check_cancelled: Callable[[], bool] | None = None,
+    ) -> Document:
         try:
             import yt_dlp
         except ImportError as e:
@@ -38,8 +44,16 @@ class YouTubeLoader(Loader):
                 "postprocessor_args": ["-ar", "16000", "-ac", "1"],
             }
 
+            if check_cancelled and check_cancelled():
+                from core.types import OperationCancelled
+                raise OperationCancelled("İşlem kullanıcı tarafından iptal edildi.")
+
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(source, download=True)
+
+            if check_cancelled and check_cancelled():
+                from core.types import OperationCancelled
+                raise OperationCancelled("İşlem kullanıcı tarafından iptal edildi.")
 
             video_id = info.get("id")
             title = info.get("title") or video_id
@@ -50,7 +64,11 @@ class YouTubeLoader(Loader):
             if wav is None:
                 raise RuntimeError("yt-dlp ses indirilemedi")
 
-            text, lang, segments = engine.transcribe(wav, language=whisper_language)
+            text, lang, segments = engine.transcribe(
+                wav,
+                language=whisper_language,
+                check_cancelled=check_cancelled,
+            )
 
         return Document(
             text=text,

@@ -5,6 +5,11 @@ from dataclasses import dataclass, field
 from typing import Any, Optional
 
 
+class OperationCancelled(Exception):
+    """Kullanıcı tarafından iptal etme işlemi."""
+    pass
+
+
 @dataclass
 class Segment:
     """Zaman damgalı ya da sayfa-numaralı bir parça (whisper/pdf gibi)."""

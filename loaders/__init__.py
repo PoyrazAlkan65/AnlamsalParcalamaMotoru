@@ -1,6 +1,8 @@
 """Loader registry — kaynak tipini doğru loader'a yönlendirir."""
 from __future__ import annotations
 
+from typing import Callable
+
 from core.types import Document
 from core.utils import detect_source_type
 
@@ -36,8 +38,16 @@ def get_loader(source: str) -> Loader:
     raise ValueError(f"Desteklenmeyen kaynak tipi: {source!r}")
 
 
-def load(source: str, whisper_language: str | None = None) -> Document:
-    return get_loader(source).load(source, whisper_language=whisper_language)
+def load(
+    source: str,
+    whisper_language: str | None = None,
+    check_cancelled: Callable[[], bool] | None = None,
+) -> Document:
+    return get_loader(source).load(
+        source,
+        whisper_language=whisper_language,
+        check_cancelled=check_cancelled,
+    )
 
 
 __all__ = ["Loader", "get_loader", "load"]

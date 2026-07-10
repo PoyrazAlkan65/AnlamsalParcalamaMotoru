@@ -1,6 +1,8 @@
 """Web sayfası loader: Trafilatura -> Playwright fallback."""
 from __future__ import annotations
 
+from typing import Callable
+
 from core.types import Document
 from core.utils import domain_of
 
@@ -12,7 +14,16 @@ from .base import Loader
 class WebLoader(Loader):
     source_type = "web"
 
-    def load(self, source: str, whisper_language: str | None = None) -> Document:
+    def load(
+        self,
+        source: str,
+        whisper_language: str | None = None,
+        check_cancelled: Callable[[], bool] | None = None,
+    ) -> Document:
+        if check_cancelled and check_cancelled():
+            from core.types import OperationCancelled
+            raise OperationCancelled("İşlem kullanıcı tarafından iptal edildi.")
+
         text, title, used = self._try_trafilatura(source)
 
         if not text or len(text) < 80:

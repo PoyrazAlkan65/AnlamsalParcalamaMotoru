@@ -4,6 +4,8 @@ from __future__ import annotations
 import threading
 from pathlib import Path
 
+from typing import Callable
+
 import config
 from core.types import Document
 
@@ -84,7 +86,16 @@ def _run_ocr(pil_image) -> tuple[str, float]:
 class ImageLoader(Loader):
     source_type = "image"
 
-    def load(self, source: str, whisper_language: str | None = None) -> Document:
+    def load(
+        self,
+        source: str,
+        whisper_language: str | None = None,
+        check_cancelled: Callable[[], bool] | None = None,
+    ) -> Document:
+        if check_cancelled and check_cancelled():
+            from core.types import OperationCancelled
+            raise OperationCancelled("İşlem kullanıcı tarafından iptal edildi.")
+
         from PIL import Image
 
         path = Path(source)

@@ -3,11 +3,13 @@ from __future__ import annotations
 
 import traceback
 from pathlib import Path
+from typing import Callable
 
 import streamlit as st
 
 import config
 from core.pipeline import IngestResult, ingest
+from core.types import OperationCancelled
 from core.utils import detect_source_type, is_youtube_url, safe_filename
 
 st.set_page_config(
@@ -30,6 +32,17 @@ if "results" not in st.session_state:
     st.session_state.results = []  # list[dict]
 if "errors" not in st.session_state:
     st.session_state.errors = []
+if "cancel_requested" not in st.session_state:
+    st.session_state.cancel_requested = False
+
+
+def request_cancel():
+    st.session_state.cancel_requested = True
+
+
+if st.session_state.cancel_requested:
+    st.toast("İşlem kullanıcı tarafından iptal edildi.", icon="ℹ️")
+    st.session_state.cancel_requested = False
 
 
 # ---- Sidebar ----
@@ -88,7 +101,12 @@ def _save_upload(uploaded_file) -> Path:
     return dst
 
 
-def _run_one(source: str, status, label: str) -> IngestResult | None:
+def _run_one(
+    source: str,
+    status,
+    label: str,
+    check_cancelled: Callable[[], bool] | None = None,
+) -> IngestResult | None:
     def progress_cb(msg: str, pct: float | None) -> None:
         if pct is not None:
             status.update(label=f"{label} — {msg}", state="running")
@@ -100,11 +118,16 @@ def _run_one(source: str, status, label: str) -> IngestResult | None:
             similarity_threshold=st.session_state.get("sim_threshold"),
             min_tokens=st.session_state.get("min_tokens"),
             max_tokens=st.session_state.get("max_tokens"),
+            check_cancelled=check_cancelled,
         )
+    except OperationCancelled:
+        status.update(label=f"{label} — İptal Edildi", state="error")
+        return None
     except Exception as e:
         tb = traceback.format_exc(limit=4)
         st.session_state.errors.append({"source": source, "error": str(e), "trace": tb})
         status.update(label=f"{label} — HATA: {e}", state="error")
+        st.toast(f"Hata: {e}", icon="🚨")
         return None
 
     qdrant = result.qdrant_result or {}
@@ -147,11 +170,23 @@ with tab_files:
     )
 
     if process_files and uploaded:
+        st.session_state.cancel_requested = False
+        st.button("İşlemi İptal Et", key="cancel_files", on_click=request_cancel)
+
         for uf in uploaded:
+            if st.session_state.get("cancel_requested", False):
+                break
             saved = _save_upload(uf)
             label = f"{uf.name}"
             with st.status(f"İşleniyor: {label}", expanded=False) as status:
-                _run_one(str(saved), status, label)
+                res = _run_one(
+                    str(saved),
+                    status,
+                    label,
+                    check_cancelled=lambda: st.session_state.get("cancel_requested", False),
+                )
+                if res is None and st.session_state.get("cancel_requested", False):
+                    break
         st.rerun()
 
 
@@ -178,9 +213,16 @@ with tab_url:
     )
 
     if process_url and url:
+        st.session_state.cancel_requested = False
+        st.button("İşlemi İptal Et", key="cancel_url", on_click=request_cancel)
         label = url[:80]
         with st.status(f"İşleniyor: {label}", expanded=False) as status:
-            _run_one(url, status, label)
+            _run_one(
+                url,
+                status,
+                label,
+                check_cancelled=lambda: st.session_state.get("cancel_requested", False),
+            )
         st.rerun()
 
 

@@ -50,9 +50,15 @@ def ingest(
     similarity_threshold: float | None = None,
     min_tokens: int | None = None,
     max_tokens: int | None = None,
+    check_cancelled: Callable[[], bool] | None = None,
 ) -> IngestResult:
     """Tek bir kaynağı uçtan uca işle."""
     progress = progress or _noop
+
+    def check_cancel():
+        if check_cancelled and check_cancelled():
+            from core.types import OperationCancelled
+            raise OperationCancelled("İşlem kullanıcı tarafından iptal edildi.")
 
     # Yerelleştirilmiş mesajlar
     msgs = {
@@ -84,9 +90,15 @@ def ingest(
         }
     }.get(system_language, "tr")
 
+    check_cancel()
     progress(msgs["read"], 0.05)
-    document = loaders.load(source, whisper_language=whisper_language)
+    document = loaders.load(
+        source,
+        whisper_language=whisper_language,
+        check_cancelled=check_cancelled,
+    )
 
+    check_cancel()
     if not document.text or not document.text.strip():
         raise RuntimeError(msgs["err_no_text"])
 
@@ -100,20 +112,25 @@ def ingest(
     if not chunks:
         raise RuntimeError(msgs["err_empty_chunks"])
 
+    check_cancel()
     progress(f"{msgs['embed']} ({len(chunks)} {msgs['chunk_lbl']})", 0.65)
     embedder = get_embedder()
     vectors = embedder.encode([c.text for c in chunks])
 
+    check_cancel()
     progress(msgs["qdrant"], 0.85)
     points = build_points(document, chunks, vectors)
 
+    check_cancel()
     progress(msgs["write"], 0.90)
     files = write_outputs(document, points, out_dir=out_dir)
 
     # Qdrant'a otomatik yükle
+    check_cancel()
     progress(msgs["upload"], 0.95)
     qdrant_res = upsert_to_qdrant(points)
 
+    check_cancel()
     progress(msgs["done"], 1.0)
     return IngestResult(
         document=document,

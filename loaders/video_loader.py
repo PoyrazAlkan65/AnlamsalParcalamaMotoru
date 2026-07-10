@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import tempfile
 from pathlib import Path
+from typing import Callable
 
 from core.types import Document
 
@@ -38,14 +39,28 @@ def extract_audio(video_path: Path, dst_wav: Path) -> None:
 class VideoLoader(Loader):
     source_type = "video"
 
-    def load(self, source: str, whisper_language: str | None = None) -> Document:
+    def load(
+        self,
+        source: str,
+        whisper_language: str | None = None,
+        check_cancelled: Callable[[], bool] | None = None,
+    ) -> Document:
         path = Path(source)
         engine = get_whisper()
 
         with tempfile.TemporaryDirectory(prefix="apm_video_") as tmp:
             wav = Path(tmp) / "audio.wav"
             extract_audio(path, wav)
-            text, lang, segments = engine.transcribe(wav, language=whisper_language)
+            
+            if check_cancelled and check_cancelled():
+                from core.types import OperationCancelled
+                raise OperationCancelled("İşlem kullanıcı tarafından iptal edildi.")
+
+            text, lang, segments = engine.transcribe(
+                wav,
+                language=whisper_language,
+                check_cancelled=check_cancelled,
+            )
 
         duration = segments[-1].end if segments else None
         return Document(

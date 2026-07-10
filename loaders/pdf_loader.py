@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from typing import Callable
+
 from core.types import Document, Segment
 
 from .base import Loader
@@ -11,7 +13,12 @@ from .base import Loader
 class PDFLoader(Loader):
     source_type = "pdf"
 
-    def load(self, source: str, whisper_language: str | None = None) -> Document:
+    def load(
+        self,
+        source: str,
+        whisper_language: str | None = None,
+        check_cancelled: Callable[[], bool] | None = None,
+    ) -> Document:
         import fitz  # pymupdf
 
         path = Path(source)
@@ -21,6 +28,11 @@ class PDFLoader(Loader):
         parts: list[str] = []
 
         for page_idx in range(len(doc)):
+            if check_cancelled and check_cancelled():
+                doc.close()
+                from core.types import OperationCancelled
+                raise OperationCancelled("İşlem kullanıcı tarafından iptal edildi.")
+
             page = doc.load_page(page_idx)
             page_text = page.get_text("text") or ""
             page_text = page_text.strip()

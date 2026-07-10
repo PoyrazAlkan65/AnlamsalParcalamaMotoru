@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import threading
 from pathlib import Path
+from typing import Callable
 
 import config
 from core.types import Segment
@@ -48,7 +49,12 @@ class WhisperEngine:
         self.compute = compute
         self._initialized = True
 
-    def transcribe(self, audio_path: str | Path, language: str | None = None) -> tuple[str, str, list[Segment]]:
+    def transcribe(
+        self,
+        audio_path: str | Path,
+        language: str | None = None,
+        check_cancelled: Callable[[], bool] | None = None,
+    ) -> tuple[str, str, list[Segment]]:
         """Return (full_text, detected_language, segments)."""
         lang = language or config.WHISPER_LANGUAGE or None
         segments_iter, info = self.model.transcribe(
@@ -60,6 +66,9 @@ class WhisperEngine:
         segments: list[Segment] = []
         texts: list[str] = []
         for seg in segments_iter:
+            if check_cancelled and check_cancelled():
+                from core.types import OperationCancelled
+                raise OperationCancelled("İşlem kullanıcı tarafından iptal edildi.")
             piece = (seg.text or "").strip()
             if not piece:
                 continue
