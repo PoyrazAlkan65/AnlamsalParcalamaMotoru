@@ -118,7 +118,27 @@ def upsert_to_qdrant(
         return result
 
     try:
-        from qdrant_client.models import PointStruct
+        from qdrant_client.models import PointStruct, Filter, FieldCondition, MatchValue
+
+        # Aynı kaynağa ait eski point'ler varsa temizle (artık parça kalmaması için)
+        if points:
+            source_uri = points[0].payload.get("source_uri")
+            if source_uri:
+                try:
+                    client.delete(
+                        collection_name=collection_name,
+                        points_selector=Filter(
+                            must=[
+                                FieldCondition(
+                                    key="source_uri",
+                                    match=MatchValue(value=source_uri),
+                                )
+                            ]
+                        )
+                    )
+                    logger.info("Eski pointler temizlendi: %s", source_uri)
+                except Exception as e:
+                    logger.warning("Eski pointler temizlenirken hata oluştu: %s", e)
 
         # Batch olarak yükle
         total = 0
@@ -175,6 +195,7 @@ def build_points(
         parent = _find_parent_segment(chunk, seg_lookup, document)
         payload = {
             "text": chunk.text,
+            "question": chunk.question,
             "source_type": document.source_type,
             "source_uri": document.source_uri,
             "title": document.title,

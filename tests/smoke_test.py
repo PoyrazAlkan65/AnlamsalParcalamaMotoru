@@ -126,3 +126,54 @@ def test_bilingual_chunking():
     en_chunks = chunk_text(en_text)
     assert len(en_chunks) > 0
     assert any("Artificial intelligence" in c.text for c in en_chunks)
+
+
+def test_qa_chunking():
+    from processing.chunker import chunk_text
+
+    # Soru ve cevaplar içeren test metni
+    qa_text = (
+        "Bu ilk soru mudur?\n"
+        "Evet, bu ilk sorunun cevabıdır. Oldukça açıklayıcı bir metin.\n\n"
+        "Peki bu ikinci soru olabilir mi?\n"
+        "Evet, bu da ikinci sorunun cevabıdır.\n"
+        "İkinci cevabın ikinci paragrafıdır bu.\n\n"
+        "Soru içermeyen son bir paragraf."
+    )
+    
+    # 1. Normal semantik chunking ile (qa_mode=False)
+    normal_chunks = chunk_text(qa_text, qa_mode=False)
+    assert len(normal_chunks) > 0
+    for c in normal_chunks:
+        assert c.question is None
+        
+    # 2. QA Modunda (qa_mode=True)
+    qa_chunks = chunk_text(qa_text, qa_mode=True)
+    assert len(qa_chunks) == 3
+    
+    # İlk çift
+    assert qa_chunks[0].question == "Bu ilk soru mudur?"
+    assert qa_chunks[0].text == "Evet, bu ilk sorunun cevabıdır. Oldukça açıklayıcı bir metin."
+    
+    # İkinci çift (birden fazla paragraf birleştirilmeli)
+    assert qa_chunks[1].question == "Peki bu ikinci soru olabilir mi?"
+    assert "ikinci sorunun cevabıdır" in qa_chunks[1].text
+    assert "İkinci cevabın ikinci paragrafıdır" in qa_chunks[1].text
+    
+    # Üçüncü kısım (sorusuz)
+    assert qa_chunks[2].question is None
+    assert qa_chunks[2].text == "Soru içermeyen son bir paragraf."
+
+    # 3. Açıkça 'soru: cevap:' veya 'soru: ?' içeren metin testi
+    explicit_text = (
+        "soru:Bana rüyanı anlatır mısın? cevap:Dün gece eski ilkokuluma geri döndüğümü gördüm.\n\n"
+        "soru:peki sonra ne oldu?  Daha sonra okulun bahçesine çıktığımda yağmur aniden durdu."
+    )
+    explicit_chunks = chunk_text(explicit_text, qa_mode=True)
+    assert len(explicit_chunks) == 2
+    
+    assert explicit_chunks[0].question == "Bana rüyanı anlatır mısın?"
+    assert explicit_chunks[0].text == "Dün gece eski ilkokuluma geri döndüğümü gördüm."
+    
+    assert explicit_chunks[1].question == "peki sonra ne oldu?"
+    assert explicit_chunks[1].text == "Daha sonra okulun bahçesine çıktığımda yağmur aniden durdu."

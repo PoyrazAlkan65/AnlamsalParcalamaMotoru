@@ -40,6 +40,7 @@ class Chunk:
     char_start: int = 0
     char_end: int = 0
     token_count: int = 0
+    question: Optional[str] = None
     parent: dict[str, Any] = field(default_factory=dict)
 
 

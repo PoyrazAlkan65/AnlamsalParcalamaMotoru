@@ -74,6 +74,12 @@ with st.sidebar:
         value=config.CHUNK_MAX_TOKENS,
         key="max_tokens",
     )
+    st.checkbox(
+        "Soru-Cevap (QA) Modu",
+        value=False,
+        key="qa_mode",
+        help="Dosyadaki ardışık soru ve cevapları eşleştirerek tek bir parça olarak Qdrant'a yükler.",
+    )
 
     st.divider()
     if st.button("Sonuçları temizle", use_container_width=True):
@@ -118,6 +124,7 @@ def _run_one(
             similarity_threshold=st.session_state.get("sim_threshold"),
             min_tokens=st.session_state.get("min_tokens"),
             max_tokens=st.session_state.get("max_tokens"),
+            qa_mode=st.session_state.get("qa_mode", False),
             check_cancelled=check_cancelled,
         )
     except OperationCancelled:
@@ -140,7 +147,10 @@ def _run_one(
         "text_chars": len(result.document.text),
         "avg_chunk_chars": round(result.avg_chunk_chars, 1),
         "files": {k: str(v) for k, v in result.output_files.items()},
-        "first_chunks": [c.text[:300] for c in result.chunks[:3]],
+        "first_chunks": [
+            (f"Soru: {c.question}\nCevap: {c.text}" if c.question else c.text)[:300]
+            for c in result.chunks[:3]
+        ],
         "extra": result.document.extra,
         "qdrant": qdrant,
     })

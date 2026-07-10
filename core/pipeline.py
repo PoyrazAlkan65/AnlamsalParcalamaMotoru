@@ -50,6 +50,7 @@ def ingest(
     similarity_threshold: float | None = None,
     min_tokens: int | None = None,
     max_tokens: int | None = None,
+    qa_mode: bool = False,
     check_cancelled: Callable[[], bool] | None = None,
 ) -> IngestResult:
     """Tek bir kaynağı uçtan uca işle."""
@@ -108,6 +109,7 @@ def ingest(
         similarity_threshold=similarity_threshold,
         min_tokens=min_tokens,
         max_tokens=max_tokens,
+        qa_mode=qa_mode,
     )
     if not chunks:
         raise RuntimeError(msgs["err_empty_chunks"])
@@ -115,7 +117,15 @@ def ingest(
     check_cancel()
     progress(f"{msgs['embed']} ({len(chunks)} {msgs['chunk_lbl']})", 0.65)
     embedder = get_embedder()
-    vectors = embedder.encode([c.text for c in chunks])
+    
+    texts_to_embed = []
+    for c in chunks:
+        if c.question:
+            texts_to_embed.append(f"Soru: {c.question}\nCevap: {c.text}")
+        else:
+            texts_to_embed.append(c.text)
+
+    vectors = embedder.encode(texts_to_embed)
 
     check_cancel()
     progress(msgs["qdrant"], 0.85)
