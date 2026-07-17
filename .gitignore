@@ -40,3 +40,4 @@ models/
 # Environment
 .env
 
+tts-env/
