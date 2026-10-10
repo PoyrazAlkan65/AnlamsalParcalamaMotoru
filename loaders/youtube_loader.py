@@ -9,6 +9,7 @@ from core.types import Document
 
 from ._whisper import get_whisper
 from .base import Loader
+from .ffmpeg_utils import find_ffmpeg
 
 
 class YouTubeLoader(Loader):
@@ -43,6 +44,13 @@ class YouTubeLoader(Loader):
                 ],
                 "postprocessor_args": ["-ar", "16000", "-ac", "1"],
             }
+            ffmpeg = find_ffmpeg()
+            if not ffmpeg:
+                raise RuntimeError(
+                    "FFmpeg/FFprobe bulunamadı. PATH'e ekleyin veya FFmpeg'i "
+                    "WinGet ile kurup uygulamayı yeniden başlatın."
+                )
+            ydl_opts["ffmpeg_location"] = ffmpeg
 
             if check_cancelled and check_cancelled():
                 from core.types import OperationCancelled

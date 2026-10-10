@@ -1,0 +1,5 @@
+# Motorun requirements.txt'ine ek olarak
+pyodbc>=5.1
+fastapi>=0.115
+uvicorn>=0.30
+requests>=2.31

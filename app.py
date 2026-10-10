@@ -95,6 +95,12 @@ st.caption(
     "anlamsal parçalara böl, Qdrant'a yüklenmek üzere dışa aktar."
 )
 
+text_only = st.checkbox(
+    "Sadece transkripti TXT olarak kaydet (embedding ve Qdrant kullanma)",
+    value=False,
+    help="Video/YouTube için önce ses yine indirilip transkribe edilir; sonrasında yalnızca metin dosyası kaydedilir.",
+)
+
 tab_files, tab_url, tab_results = st.tabs(["Dosya yükle", "URL gir", f"Sonuçlar ({len(st.session_state.results)})"])
 
 
@@ -112,6 +118,7 @@ def _run_one(
     status,
     label: str,
     check_cancelled: Callable[[], bool] | None = None,
+    text_only: bool = False,
 ) -> IngestResult | None:
     def progress_cb(msg: str, pct: float | None) -> None:
         if pct is not None:
@@ -125,6 +132,7 @@ def _run_one(
             min_tokens=st.session_state.get("min_tokens"),
             max_tokens=st.session_state.get("max_tokens"),
             qa_mode=st.session_state.get("qa_mode", False),
+            text_only=text_only,
             check_cancelled=check_cancelled,
         )
     except OperationCancelled:
@@ -145,6 +153,7 @@ def _run_one(
         "language": result.document.language,
         "chunk_count": result.chunk_count,
         "text_chars": len(result.document.text),
+        "text": result.document.text,
         "avg_chunk_chars": round(result.avg_chunk_chars, 1),
         "files": {k: str(v) for k, v in result.output_files.items()},
         "first_chunks": [
@@ -161,7 +170,12 @@ def _run_one(
     elif qdrant.get("error"):
         qdrant_label = f" · Qdrant ✗"
 
-    status.update(label=f"{label} — Tamam ({result.chunk_count} parça{qdrant_label})", state="complete")
+    completion = (
+        "TXT kaydedildi"
+        if text_only
+        else f"{result.chunk_count} parça{qdrant_label}"
+    )
+    status.update(label=f"{label} — Tamam ({completion})", state="complete")
     return result
 
 
@@ -194,6 +208,7 @@ with tab_files:
                     status,
                     label,
                     check_cancelled=lambda: st.session_state.get("cancel_requested", False),
+                    text_only=text_only,
                 )
                 if res is None and st.session_state.get("cancel_requested", False):
                     break
@@ -210,6 +225,8 @@ with tab_url:
     if url:
         if detected == "youtube":
             st.info("YouTube linki algılandı → sesi çekilip transkribe edilecek.")
+        elif detected == "video":
+            st.info("Doğrudan video bağlantısı algılandı → sesi çıkarılıp transkribe edilecek.")
         elif detected == "web":
             st.info("Web sayfası algılandı → Trafilatura, gerekirse Playwright.")
         else:
@@ -218,7 +235,7 @@ with tab_url:
     process_url = st.button(
         "URL'yi işle",
         type="primary",
-        disabled=not url or detected not in {"web", "youtube"},
+        disabled=not url or detected not in {"web", "youtube", "video"},
         key="btn_url",
     )
 
@@ -232,6 +249,7 @@ with tab_url:
                 status,
                 label,
                 check_cancelled=lambda: st.session_state.get("cancel_requested", False),
+                text_only=text_only,
             )
         st.rerun()
 
@@ -259,7 +277,13 @@ with tab_results:
                 meta_cols = st.columns(3)
                 meta_cols[0].caption(f"Dil: `{r['language'] or 'auto'}`")
                 meta_cols[1].caption(f"Toplam metin: {r['text_chars']:,} karakter")
-                meta_cols[2].caption(f"Çıktı: `{Path(r['files'].get('parquet', '')).name}`")
+                output_name = (
+                    r["files"].get("txt")
+                    or r["files"].get("parquet")
+                    or r["files"].get("jsonl")
+                    or ""
+                )
+                meta_cols[2].caption(f"Çıktı: `{Path(output_name).name}`")
 
                 # Qdrant durumu
                 qdrant_info = r.get("qdrant", {})
@@ -273,11 +297,19 @@ with tab_results:
                         st.markdown(f"**#{j}**")
                         st.write(txt + ("…" if len(txt) >= 300 else ""))
 
+                if r["files"].get("txt"):
+                    with st.expander("Tam transkript"):
+                        st.text(r["text"])
+
                 with st.expander("Kaynak meta"):
                     st.json(r["extra"])
 
                 dl_cols = st.columns(2)
-                for col, kind in zip(dl_cols, ["jsonl", "parquet"]):
+                output_kinds = [
+                    kind for kind in ("txt", "jsonl", "parquet")
+                    if r["files"].get(kind)
+                ]
+                for col, kind in zip(dl_cols, output_kinds):
                     p = r["files"].get(kind)
                     if p and Path(p).exists():
                         with open(p, "rb") as f:

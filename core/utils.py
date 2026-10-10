@@ -5,7 +5,7 @@ import hashlib
 import re
 import uuid
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 import chardet
 
@@ -31,6 +31,9 @@ def detect_source_type(source: str) -> str:
     if source.startswith(("http://", "https://")):
         if _YOUTUBE_RE.search(source):
             return "youtube"
+        extension = Path(unquote(urlparse(source).path)).suffix.lower()
+        if EXT_TO_TYPE.get(extension) in {"audio", "video"}:
+            return EXT_TO_TYPE[extension]
         return "web"
     ext = Path(source).suffix.lower()
     return EXT_TO_TYPE.get(ext, "unknown")

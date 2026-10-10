@@ -273,6 +273,15 @@ def write_outputs(
     return {"jsonl": jsonl_path, "parquet": parquet_path}
 
 
+def write_text_output(document: Document, out_dir: Path | None = None) -> Path:
+    """Write the extracted document text as a UTF-8 plain-text file."""
+    out_dir = Path(out_dir or config.OUTPUTS_DIR)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    text_path = out_dir / f"{_make_stem(document)}.txt"
+    text_path.write_text(document.text, encoding="utf-8")
+    return text_path
+
+
 def _make_stem(document: Document) -> str:
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     label = safe_filename(document.title or document.source_type)

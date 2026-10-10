@@ -1,20 +1,21 @@
 """Video loader: ffmpeg ile sesi çıkar, Whisper ile transkripsiyon."""
 from __future__ import annotations
 
-import shutil
 import subprocess
 import tempfile
 from pathlib import Path
 from typing import Callable
+from urllib.parse import unquote, urlparse
 
 from core.types import Document
 
 from ._whisper import get_whisper
 from .base import Loader
+from .ffmpeg_utils import find_ffmpeg
 
 
 def _check_ffmpeg() -> str:
-    ffmpeg = shutil.which("ffmpeg")
+    ffmpeg = find_ffmpeg()
     if not ffmpeg:
         raise RuntimeError(
             "ffmpeg sistemde bulunamadı. README'deki kurulum adımlarını izle."
@@ -22,7 +23,7 @@ def _check_ffmpeg() -> str:
     return ffmpeg
 
 
-def extract_audio(video_path: Path, dst_wav: Path) -> None:
+def extract_audio(video_path: str | Path, dst_wav: Path) -> None:
     """Videoyu 16kHz mono WAV'a indirger (Whisper'ın istediği format)."""
     ffmpeg = _check_ffmpeg()
     cmd = [
@@ -45,12 +46,19 @@ class VideoLoader(Loader):
         whisper_language: str | None = None,
         check_cancelled: Callable[[], bool] | None = None,
     ) -> Document:
-        path = Path(source)
+        parsed = urlparse(source)
+        is_url = parsed.scheme in {"http", "https"}
+        path = Path(source) if not is_url else None
+        title = (
+            Path(unquote(parsed.path)).stem
+            if is_url
+            else path.stem
+        )
         engine = get_whisper()
 
         with tempfile.TemporaryDirectory(prefix="apm_video_") as tmp:
             wav = Path(tmp) / "audio.wav"
-            extract_audio(path, wav)
+            extract_audio(source if is_url else path, wav)
             
             if check_cancelled and check_cancelled():
                 from core.types import OperationCancelled
@@ -66,12 +74,12 @@ class VideoLoader(Loader):
         return Document(
             text=text,
             source_type=self.source_type,
-            source_uri=path.resolve().as_uri(),
-            title=path.stem,
+            source_uri=source if is_url else path.resolve().as_uri(),
+            title=title,
             language=lang,
             segments=segments,
             extra={
                 "duration_sec": duration,
-                "byte_size": path.stat().st_size if path.exists() else 0,
+                "byte_size": path.stat().st_size if path and path.exists() else None,
             },
         )

@@ -52,7 +52,7 @@ streamlit run app.py
 
 Tarayıcıda açılan UI'da:
 - **Dosya yükle**: çoklu yükleme — pdf, png/jpg, mp3/wav/m4a, mp4/mkv, txt/md/csv/json.
-- **URL gir**: YouTube linki veya herhangi bir web sayfası. YouTube otomatik tespit edilir.
+- **URL gir**: YouTube linki, doğrudan ses/video dosyası bağlantısı veya web sayfası. Doğrudan MP4 bağlantısı video olarak algılanır ve sesi transkribe edilir.
 - **Sonuçlar**: her kaynak için chunk sayısı, ortalama uzunluk, ilk parça önizlemesi, JSONL/Parquet indirme.
 
 Çıktı dosyaları `data/outputs/` altında birikir. Parquet şeması:

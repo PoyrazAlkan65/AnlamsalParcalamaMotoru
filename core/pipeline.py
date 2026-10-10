@@ -7,9 +7,15 @@ from typing import Callable
 
 import numpy as np
 
+import config
 import loaders
 from core.types import Chunk, Document, QdrantPoint
-from export.qdrant_writer import build_points, upsert_to_qdrant, write_outputs
+from export.qdrant_writer import (
+    build_points,
+    upsert_to_qdrant,
+    write_outputs,
+    write_text_output,
+)
 from processing.chunker import chunk_text
 from processing.embedder import get_embedder
 
@@ -51,6 +57,7 @@ def ingest(
     min_tokens: int | None = None,
     max_tokens: int | None = None,
     qa_mode: bool = False,
+    text_only: bool = False,
     check_cancelled: Callable[[], bool] | None = None,
 ) -> IngestResult:
     """Tek bir kaynağı uçtan uca işle."""
@@ -102,6 +109,19 @@ def ingest(
     check_cancel()
     if not document.text or not document.text.strip():
         raise RuntimeError(msgs["err_no_text"])
+
+    if text_only:
+        check_cancel()
+        progress("Transkript TXT olarak kaydediliyor", 0.9)
+        text_path = write_text_output(document, out_dir=out_dir)
+        progress(msgs["done"], 1.0)
+        return IngestResult(
+            document=document,
+            chunks=[],
+            embeddings=np.empty((0, config.EMBEDDING_DIM), dtype=np.float32),
+            points=[],
+            output_files={"txt": text_path},
+        )
 
     progress(f"{msgs['chunk']} ({len(document.text):,} {msgs['char_lbl']})", 0.35)
     chunks = chunk_text(

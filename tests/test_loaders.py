@@ -18,6 +18,8 @@ from loaders.text_loader import TextLoader
 from loaders.video_loader import VideoLoader
 from loaders.web_loader import WebLoader
 from loaders.youtube_loader import YouTubeLoader
+from loaders.ffmpeg_utils import find_ffmpeg
+from core.utils import detect_source_type
 
 
 # 1. TextLoader test
@@ -122,7 +124,13 @@ def test_video_loader(
 @patch("loaders.youtube_loader.get_whisper")
 @patch("yt_dlp.YoutubeDL")
 @patch("pathlib.Path.glob")
-def test_youtube_loader(mock_glob: MagicMock, mock_yt_dlp: MagicMock, mock_get_whisper: MagicMock):
+@patch("loaders.ffmpeg_utils.shutil.which", return_value="/usr/bin/ffmpeg")
+def test_youtube_loader(
+    mock_which: MagicMock,
+    mock_glob: MagicMock,
+    mock_yt_dlp: MagicMock,
+    mock_get_whisper: MagicMock,
+):
     mock_instance = MagicMock()
     mock_instance.extract_info.return_value = {
         "id": "12345",
@@ -152,6 +160,59 @@ def test_youtube_loader(mock_glob: MagicMock, mock_yt_dlp: MagicMock, mock_get_w
     assert doc.extra["duration_sec"] == 120
     assert doc.extra["uploader"] == "Test Creator"
     mock_engine.transcribe.assert_called_once()
+    options = mock_yt_dlp.call_args.args[0]
+    assert options["ffmpeg_location"] == "/usr/bin/ffmpeg"
+
+
+@patch("loaders.ffmpeg_utils.shutil.which", return_value=None)
+def test_find_ffmpeg_in_winget_packages(
+    mock_which: MagicMock, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+):
+    package_bin = (
+        tmp_path
+        / "Microsoft"
+        / "WinGet"
+        / "Packages"
+        / "Gyan.FFmpeg_package"
+        / "ffmpeg-9.0-full_build"
+        / "bin"
+    )
+    package_bin.mkdir(parents=True)
+    ffmpeg = package_bin / "ffmpeg.exe"
+    ffprobe = package_bin / "ffprobe.exe"
+    ffmpeg.touch()
+    ffprobe.touch()
+    monkeypatch.setenv("LOCALAPPDATA", str(tmp_path))
+
+    assert find_ffmpeg() == str(ffmpeg)
+
+
+def test_detect_direct_video_url():
+    url = "https://cdn.example.com/course/lesson%20one.mp4?token=abc"
+    assert detect_source_type(url) == "video"
+
+
+@patch("loaders.video_loader.extract_audio")
+@patch("loaders.video_loader.get_whisper")
+def test_video_loader_accepts_direct_video_url(
+    mock_get_whisper: MagicMock, mock_extract_audio: MagicMock
+):
+    mock_engine = MagicMock()
+    mock_engine.transcribe.return_value = (
+        "Lesson transcript",
+        "tr",
+        [Segment(text="Lesson transcript", start=0.0, end=4.0)],
+    )
+    mock_get_whisper.return_value = mock_engine
+    url = "https://cdn.example.com/course/lesson.mp4?token=abc"
+
+    doc = VideoLoader().load(url)
+
+    assert doc.source_uri == url
+    assert doc.title == "lesson"
+    assert doc.text == "Lesson transcript"
+    mock_extract_audio.assert_called_once()
+    assert mock_extract_audio.call_args.args[0] == url
 
 
 # 6. ImageLoader test (mocking PIL, pytesseract, BLIP captioning)
