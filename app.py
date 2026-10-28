@@ -18,6 +18,18 @@ st.set_page_config(
     layout="wide",
 )
 
+# ---- Keycloak girişi ----
+if not st.user.is_logged_in:
+    st.title("Anlamsal Parçalama Motoru")
+    st.write("Devam etmek için giriş yapın.")
+    st.button("Giriş yap", on_click=st.login, type="primary")
+    st.stop()
+
+with st.sidebar:
+    _kullanici = st.user.get("name") or st.user.get("preferred_username") or ""
+    st.caption(f"Giriş yapan: {_kullanici}")
+    st.button("Çıkış yap", on_click=st.logout)
+
 ACCEPT_EXTENSIONS = [
     "pdf",
     "png", "jpg", "jpeg", "bmp", "tiff", "webp", "gif",
