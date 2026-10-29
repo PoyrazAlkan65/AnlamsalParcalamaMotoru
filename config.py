@@ -59,6 +59,30 @@ WEB_USER_AGENT = (
 )
 PLAYWRIGHT_TIMEOUT_MS = int(os.getenv("PLAYWRIGHT_TIMEOUT_MS", "30000"))
 
+# ---- YouTube (yt-dlp) ----
+# YouTube imza çözümü için JS çalışma ortamı gerekir (yt-dlp-ejs). Sırayla denenir: deno, node (>=22), bun, quickjs
+YTDLP_JS_RUNTIMES = [r.strip() for r in os.getenv("YTDLP_JS_RUNTIMES", "deno,node").split(",") if r.strip()]
+
+# ---- Kaynak veritabanı (tablo kolonlarını parçalama) ----
+# MSSQL: projelerdeki ortak MSSQL_* değişkenleri (salt okunur bir kullanıcı önerilir)
+MSSQL_SERVER = os.getenv("MSSQL_SERVER", "")          # sunucu, sunucu,1433 · sunucu:1433 · sunucu\INSTANCE
+MSSQL_DBNAME = os.getenv("MSSQL_DBNAME", "")
+MSSQL_USER = os.getenv("MSSQL_USER", "")
+MSSQL_PWD = os.getenv("MSSQL_PWD", "")
+MSSQL_POOL_MAX = int(os.getenv("MSSQL_POOL_MAX", "10"))
+MSSQL_POOL_MIN = int(os.getenv("MSSQL_POOL_MIN", "0"))  # SQLAlchemy'de karşılığı yok; bağlantılar gerektikçe açılır
+MSSQL_POOL_TIMEOUT = int(os.getenv("MSSQL_POOL_TIMEOUT", "30000"))  # ms
+MSSQL_ODBC_DRIVER = os.getenv("MSSQL_ODBC_DRIVER", "ODBC Driver 17 for SQL Server")
+MSSQL_ENCRYPT = os.getenv("MSSQL_ENCRYPT", "")         # boş: sürücü varsayılanı · yes / no
+MSSQL_TRUST_SERVER_CERTIFICATE = os.getenv("MSSQL_TRUST_SERVER_CERTIFICATE", "yes")
+
+# Diğer veritabanları için SQLAlchemy URL'i; doluysa MSSQL_* yerine bu kullanılır. Örnekler:
+#   postgresql+psycopg://kullanici:sifre@sunucu:5432/veritabani
+#   sqlite:///data/inputs/ornek.db
+SOURCE_DB_URL = os.getenv("SOURCE_DB_URL", "")
+# source_uri'de görünen ad (db://<ad>/<tablo>/<id>); boşsa veritabanı adı
+SOURCE_DB_LABEL = os.getenv("SOURCE_DB_LABEL", "")
+
 # ---- Qdrant ----
 QDRANT_HOST = os.getenv("QDRANT_HOST")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))

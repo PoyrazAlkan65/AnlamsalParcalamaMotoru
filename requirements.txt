@@ -11,7 +11,8 @@ pillow>=10.0
 
 # Audio / Video transcription
 faster-whisper>=1.0
-yt-dlp>=2025.1
+# [default] → yt-dlp-ejs: YouTube imza çözümü (JS çalışma ortamı da gerekir: deno veya node>=22)
+yt-dlp[default]>=2025.11
 
 # Web extraction
 trafilatura>=1.12
@@ -30,6 +31,10 @@ chonkie[semantic]>=0.2
 # Storage / serialization
 pyarrow>=16
 numpy>=1.26
+
+# Kaynak veritabanı (tablo kolonlarını parçalama). Sürücü veritabanına göre ayrıca kurulur:
+# MSSQL → pyodbc · PostgreSQL → psycopg[binary] · MySQL → pymysql · SQLite → hazır
+sqlalchemy>=2.0
 
 # Qdrant vector database
 qdrant-client>=1.9

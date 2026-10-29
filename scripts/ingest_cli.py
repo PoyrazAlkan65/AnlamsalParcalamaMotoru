@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from core.pipeline import ingest
+from core.pipeline import OUTPUT_KINDS, ingest
 
 # Desteklenen uzantılar
 ACCEPT_EXTENSIONS = {
@@ -30,7 +30,7 @@ def is_supported_file(path: Path) -> bool:
     return ext in ACCEPT_EXTENSIONS
 
 
-def process_single(source: str, show_logs: bool = True) -> tuple[bool, str]:
+def process_single(source: str, show_logs: bool = True, **ingest_opts) -> tuple[bool, str]:
     """Tek bir kaynağı (dosya veya URL) işler. (Başarı, Mesaj) döner."""
     start = time.perf_counter()
     last_time = [start]
@@ -45,7 +45,7 @@ def process_single(source: str, show_logs: bool = True) -> tuple[bool, str]:
         print(f"[{int(now - start):4d}s] {pct_str}  +{delta:5.1f}s  {msg}", flush=True)
 
     try:
-        result = ingest(source, progress=progress_cb)
+        result = ingest(source, progress=progress_cb, **ingest_opts)
         duration = time.perf_counter() - start
         msg = f"Başarılı: type={result.document.source_type} chunks={result.chunk_count} ({duration:.1f}s)"
         return True, msg
@@ -74,7 +74,28 @@ def main() -> int:
         help="Paralel çalışacak iş parçacığı (worker) sayısı (varsayılan: 1)."
     )
 
+    parser.add_argument(
+        "--no-qdrant",
+        action="store_true",
+        help="Qdrant'a yükleme (varsayılan: yüklenir).",
+    )
+    parser.add_argument(
+        "--outputs",
+        default="jsonl,parquet",
+        help=f"Yazılacak dosyalar, virgülle: {','.join(OUTPUT_KINDS)} veya boş (varsayılan: jsonl,parquet).",
+    )
+    parser.add_argument(
+        "--text-only",
+        action="store_true",
+        help="Parçalama/embedding/Qdrant yok; yalnızca metni TXT olarak kaydet.",
+    )
+
     args = parser.parse_args()
+    outputs = [k.strip() for k in args.outputs.split(",") if k.strip()]
+    unknown = sorted(set(outputs) - set(OUTPUT_KINDS))
+    if unknown:
+        parser.error(f"Bilinmeyen çıktı türü: {', '.join(unknown)}")
+    ingest_opts = {"qdrant": not args.no_qdrant, "outputs": outputs, "text_only": args.text_only}
     source_str = args.source
     source_path = Path(source_str)
 
@@ -123,12 +144,12 @@ def main() -> int:
 
         if args.workers <= 1:
             for f in all_files:
-                success, msg = process_single(str(f), show_logs=False)
+                success, msg = process_single(str(f), show_logs=False, **ingest_opts)
                 update_progress(success, f, msg)
         else:
             with ThreadPoolExecutor(max_workers=args.workers) as executor:
                 future_to_file = {
-                    executor.submit(process_single, str(f), False): f
+                    executor.submit(process_single, str(f), False, **ingest_opts): f
                     for f in all_files
                 }
                 for future in as_completed(future_to_file):
@@ -164,13 +185,16 @@ def main() -> int:
             print(f"[{int(now - start):4d}s] {pct_str}  +{delta:5.1f}s  {msg}", flush=True)
 
         try:
-            result = ingest(source_str, progress=progress)
+            result = ingest(source_str, progress=progress, **ingest_opts)
             print()
             print(f"Document: type={result.document.source_type} title={result.document.title!r}")
             print(f"Toplam metin: {len(result.document.text):,} karakter")
             print(f"Chunk sayısı: {result.chunk_count}")
             print(f"Ortalama chunk karakteri: {result.avg_chunk_chars:.1f}")
             print(f"Embedding shape: {result.embeddings.shape}, dtype={result.embeddings.dtype}")
+            if result.qdrant_result:
+                q = result.qdrant_result
+                print(f"Qdrant: {'✓ ' + str(q.get('upserted', 0)) + ' point' if q.get('success') else '✗ ' + str(q.get('error'))}")
             for kind, path in result.output_files.items():
                 print(f"  {kind}: {path}")
             print(f"Toplam süre: {time.perf_counter() - start:.1f}s")

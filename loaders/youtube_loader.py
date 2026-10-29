@@ -5,6 +5,7 @@ import tempfile
 from pathlib import Path
 from typing import Callable
 
+import config
 from core.types import Document
 
 from ._whisper import get_whisper
@@ -43,6 +44,8 @@ class YouTubeLoader(Loader):
                     }
                 ],
                 "postprocessor_args": ["-ar", "16000", "-ac", "1"],
+                # Varsayılan yalnızca deno; node vb. de açılmazsa imza çözülemez → HTTP 403
+                "js_runtimes": {name: {} for name in config.YTDLP_JS_RUNTIMES},
             }
             ffmpeg = find_ffmpeg()
             if not ffmpeg:

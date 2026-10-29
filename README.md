@@ -79,6 +79,46 @@ Tüm varsayılanlar `config.py` içinde, env değişkenleri ile override edilebi
 | `CHUNK_MIN_TOKENS` | `64` | Bu altındakiler komşusuyla birleştirilir |
 | `CHUNK_MAX_TOKENS` | `512` | Zorlama üst sınır |
 | `TESSERACT_CMD` | (boş) | Tesseract exe'sinin tam yolu (Windows'ta gerekebilir) |
+| `MSSQL_SERVER` / `MSSQL_DBNAME` / `MSSQL_USER` / `MSSQL_PWD` | (boş) | Parçalanacak tabloların bulunduğu MSSQL. `MSSQL_POOL_MAX`, `MSSQL_POOL_TIMEOUT` (ms) havuz ayarları. Bkz. "Veritabanı tablolarını parçalama" |
+| `SOURCE_DB_URL` | (boş) | MSSQL dışı veritabanları için SQLAlchemy URL'i; doluysa `MSSQL_*` yerine kullanılır |
+| `SOURCE_DB_LABEL` | (boş) | `source_uri`'de görünen ad (`db://<ad>/<tablo>/<kimlik>`); boşsa veritabanı adı |
+| `YTDLP_JS_RUNTIMES` | `deno,node` | YouTube imza çözümü için JS ortamı. Biri kurulu olmalı (Node ≥ 22); yoksa indirme HTTP 403 verir |
+
+## Veritabanı tablolarını parçalama
+
+Herhangi bir SQL veritabanındaki bir tablonun metin kolonu satır satır parçalanabilir. Her satır ayrı bir
+kaynaktır (`db://<ad>/<tablo>/<kimlik>`); bir satırın parçaları başka satıra karışmaz.
+
+```env
+# MSSQL — projelerdeki ortak değişkenler (salt okunur kullanıcı önerilir)
+MSSQL_USER=...
+MSSQL_PWD=...
+MSSQL_SERVER=sunucu            # sunucu,1433 · sunucu:1433 · sunucu\INSTANCE da olur
+MSSQL_DBNAME=...
+MSSQL_POOL_MAX=10              # havuzdaki en fazla bağlantı
+MSSQL_POOL_MIN=0               # okunur; SQLAlchemy'de karşılığı yok (bağlantılar gerektikçe açılır)
+MSSQL_POOL_TIMEOUT=30000       # ms, havuzdan bağlantı bekleme süresi
+# MSSQL_ODBC_DRIVER=ODBC Driver 17 for SQL Server
+# MSSQL_ENCRYPT=yes
+# MSSQL_TRUST_SERVER_CERTIFICATE=yes
+
+# Diğer veritabanları: SQLAlchemy URL'i. Doluysa MSSQL_* yerine bu kullanılır.
+# SOURCE_DB_URL=postgresql+psycopg://kullanici:sifre@sunucu:5432/veritabani   (pip install "psycopg[binary]")
+```
+
+Denemek için örnek veritabanı: `python scripts/make_sample_db.py` → `SOURCE_DB_URL=sqlite:///data/inputs/ornek.db`.
+
+UI'daki **Veritabanı** sekmesinde: tablo → kimlik kolonu → parçalanacak kolon → (opsiyonel) başlık, ek bilgi
+kolonları, filtre (`kolon = değer`, boşlar için `NULL`) → satır sayısı. HTML içerik paragraf yapısı korunarak
+temizlenir. Başlık her parçanın embedding'ine bağlam olarak eklenir. Kısa kayıtlar (ör. SSS) için strateji
+**Tek parça** seçilebilir. Yalnızca SELECT çalıştırılır; tablo ve kolon adları şemadan doğrulanır.
+
+## Kayıt: önizleme ya da otomatik
+
+Kenar çubuğunda "Qdrant'a otomatik kaydet" ve dosya türleri (TXT / JSONL / Parquet) işaretlenirse işlem sonunda
+kayıt kendiliğinden yapılır. Hiçbiri işaretli değilse sonuçlar yalnızca önizlenir; **Sonuçlar** sekmesinden kaynak
+yeniden işlenmeden Qdrant'a kaydedilebilir ya da dosya oluşturulabilir. Qdrant hedefi `.env`'deki
+`QDRANT_COLLECTION`'dır. Bir kaynak yeniden kaydedildiğinde eski parçaları silinir.
 
 ## Test
 

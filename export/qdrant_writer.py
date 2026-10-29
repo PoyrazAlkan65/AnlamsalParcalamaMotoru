@@ -118,27 +118,25 @@ def upsert_to_qdrant(
         return result
 
     try:
-        from qdrant_client.models import PointStruct, Filter, FieldCondition, MatchValue
+        from qdrant_client.models import PointStruct, Filter, FieldCondition, MatchAny
 
-        # Aynı kaynağa ait eski point'ler varsa temizle (artık parça kalmaması için)
-        if points:
-            source_uri = points[0].payload.get("source_uri")
-            if source_uri:
-                try:
-                    client.delete(
-                        collection_name=collection_name,
-                        points_selector=Filter(
-                            must=[
-                                FieldCondition(
-                                    key="source_uri",
-                                    match=MatchValue(value=source_uri),
-                                )
-                            ]
-                        )
-                    )
-                    logger.info("Eski pointler temizlendi: %s", source_uri)
-                except Exception as e:
-                    logger.warning("Eski pointler temizlenirken hata oluştu: %s", e)
+        # Yüklenen her kaynağın eski point'lerini temizle (kaynak kısaldıysa artık parça kalmasın).
+        # Toplu yüklemede (ör. tablo satırları) her satır ayrı kaynaktır; yalnızca ilkini silmek yetmez.
+        source_uris = list(dict.fromkeys(
+            p.payload["source_uri"] for p in points if p.payload.get("source_uri")
+        ))
+        for i in range(0, len(source_uris), 256):
+            part = source_uris[i : i + 256]
+            try:
+                client.delete(
+                    collection_name=collection_name,
+                    points_selector=Filter(
+                        must=[FieldCondition(key="source_uri", match=MatchAny(any=part))]
+                    ),
+                )
+                logger.info("Eski pointler temizlendi: %d kaynak", len(part))
+            except Exception as e:
+                logger.warning("Eski pointler temizlenirken hata oluştu: %s", e)
 
         # Batch olarak yükle
         total = 0
@@ -257,20 +255,23 @@ def write_outputs(
     document: Document,
     points: Iterable[QdrantPoint],
     out_dir: Path | None = None,
+    kinds: Iterable[str] = ("jsonl", "parquet"),
 ) -> dict[str, Path]:
     out_dir = Path(out_dir or config.OUTPUTS_DIR)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     points_list = list(points)
     stem = _make_stem(document)
+    kinds = set(kinds)
 
-    jsonl_path = out_dir / f"{stem}.jsonl"
-    parquet_path = out_dir / f"{stem}.parquet"
-
-    _write_jsonl(points_list, jsonl_path)
-    _write_parquet(points_list, parquet_path)
-
-    return {"jsonl": jsonl_path, "parquet": parquet_path}
+    files: dict[str, Path] = {}
+    if "jsonl" in kinds:
+        files["jsonl"] = out_dir / f"{stem}.jsonl"
+        _write_jsonl(points_list, files["jsonl"])
+    if "parquet" in kinds:
+        files["parquet"] = out_dir / f"{stem}.parquet"
+        _write_parquet(points_list, files["parquet"])
+    return files
 
 
 def write_text_output(document: Document, out_dir: Path | None = None) -> Path:

@@ -368,13 +368,24 @@ def get_chunker(
     return _default
 
 
+def whole_text_chunk(text: str) -> list[Chunk]:
+    """Metnin tamamı tek parça (ör. kısa veritabanı kayıtları)."""
+    text = (text or "").strip()
+    if not text:
+        return []
+    return [Chunk(text=text, chunk_index=0, char_start=0, char_end=len(text), token_count=max(1, len(text) // 4))]
+
+
 def chunk_text(
     text: str,
     similarity_threshold: float | None = None,
     min_tokens: int | None = None,
     max_tokens: int | None = None,
     qa_mode: bool = False,
+    whole: bool = False,
 ) -> list[Chunk]:
+    if whole:
+        return whole_text_chunk(text)
     if qa_mode:
         return parse_qa_text(text)
     return get_chunker(similarity_threshold, min_tokens, max_tokens).chunk(text)
