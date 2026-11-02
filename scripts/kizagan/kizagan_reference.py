@@ -40,8 +40,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reference", required=True, help="Referans ses (mono WAV)")
     parser.add_argument("--output-dir", required=True, help="Yeni çıktı klasörü; önceden var olmamalı")
     parser.add_argument("--device", default="auto", choices=["auto", "mps", "cpu", "cuda"])
+    # Varsayılanlar yayımcının inference.py'sindeki değerlendirme ayarlarıyla aynıdır (cfg 2.0, steps 16, seed 42)
     parser.add_argument("--cfg", type=float, default=2.0)
-    parser.add_argument("--steps", type=int, default=10, help="Difüzyon adım sayısı (inference_timesteps)")
+    parser.add_argument("--steps", type=int, default=16, help="Difüzyon adım sayısı (inference_timesteps)")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--no-warmup", action="store_true", help="Ölçüm öncesi ısınma çalıştırmasını atla")
     return parser.parse_args()
@@ -113,7 +114,8 @@ def main() -> int:
     output_dir.mkdir(parents=True, exist_ok=False)
     device = resolve_device(args.device)
     gen_kwargs = dict(reference_wav_path=args.reference, cfg_value=args.cfg,
-                      inference_timesteps=args.steps, retry_badcase=False)
+                      inference_timesteps=args.steps, min_len=2, max_len=1024,
+                      normalize=False, denoise=False, retry_badcase=False)
 
     print(f"Cihaz: {device} | cümle sayısı: {len(sentences)}")
     t0 = time.perf_counter()
@@ -156,7 +158,8 @@ def main() -> int:
         "versions": {"python": platform.python_version(), "torch": torch.__version__,
                      "voxcpm": package_version("voxcpm"), "transformers": package_version("transformers")},
         "settings": {"cfg": args.cfg, "steps": args.steps, "seed": args.seed,
-                     "retry_badcase": False, "warmup": not args.no_warmup,
+                     "min_len": 2, "max_len": 1024, "normalize": False, "denoise": False,
+                     "retry_badcase": False, "streaming": False, "warmup": not args.no_warmup,
                      "reference": str(args.reference), "model": str(args.model)},
         "sample_rate": sample_rate,
         "model_load_s": round(load_s, 2),
