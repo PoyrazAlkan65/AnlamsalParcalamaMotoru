@@ -1,0 +1,13 @@
+# Kızagan-TTS test cümleleri: PyTorch ve ONNX karşılaştırmasında aynı dosya kullanılır.
+# Her boş olmayan satır ayrı seslendirilir. Sayılar bilerek yazıyla yazılmıştır
+# (model rakam okuyamıyor). Kapsam: ı/İ/ğ/ş/ç/ö/ü, soru tonlaması, uzun cümle.
+Rüyanda uçtuğunu görmek, özgürlük arayışını ve hayatındaki kısıtlamalardan kurtulma isteğini yansıtır.
+Bu rüya sana ne anlatıyor olabilir?
+Dalgaların sakinliği, iç huzurunu ve dengeyi işaret eder.
+Işığın içinde yürüdüğünü görmek, yeni bir başlangıca hazır olduğunu gösterir.
+Ağaçların gölgesinde dinlenmek, güvende hissetme ihtiyacını simgeler.
+Eski bir arkadaşınla karşılaşmak, geçmişte çözülmemiş duygulara işaret edebilir mi?
+Yüz elli basamaklı bir merdiveni tırmanmak, hedeflerine adım adım yaklaştığını anlatır.
+Üç gün boyunca aynı rüyayı görmek, bilinçaltının sana önemli bir mesaj vermeye çalıştığını düşündürür.
+Kaybolduğun bir şehirde yolunu bulmaya çalışmak, hayatında yön arayışı içinde olduğunu gösterir; ancak bu durum geçicidir ve çoğu zaman yeni fırsatların habercisidir.
+Çiçek açan bir bahçe, büyüme, bereket ve şükran duygularıyla ilişkilendirilir.
