@@ -65,9 +65,12 @@ payload string          # JSON (text, source_type, source_uri, page, timestamp_s
 
 ## Konfigürasyon
 
-Tüm varsayılanlar `config.py` içinde, env değişkenleri ile override edilebilir:
+Tüm ayarlar yalnızca proje kökündeki `.env` dosyasından okunur; `config.py` içinde varsayılan değer yoktur.
+Kurulumda `.env.example` dosyasını `.env` olarak kopyalayıp gizli değerleri (veritabanı, Qdrant) doldurun.
+Eksik anahtar varsa uygulama açılışta hangi ayarların eksik olduğunu söyleyerek durur.
+Ders analizi servisi kendi dosyasını kullanır: `services/lesson_analysis/.env` (örnek: `.env.example`).
 
-| Env | Varsayılan | Not |
+| Env | Önerilen değer (`.env.example`) | Not |
 |---|---|---|
 | `EMBEDDING_MODEL` | `BAAI/bge-m3` | sentence-transformers ile yüklenir |
 | `WHISPER_MODEL` | `large-v3` | Daha hızlı için `turbo` ya da `medium` |
@@ -83,6 +86,7 @@ Tüm varsayılanlar `config.py` içinde, env değişkenleri ile override edilebi
 | `SOURCE_DB_URL` | (boş) | MSSQL dışı veritabanları için SQLAlchemy URL'i; doluysa `MSSQL_*` yerine kullanılır |
 | `SOURCE_DB_LABEL` | (boş) | `source_uri`'de görünen ad (`db://<ad>/<tablo>/<kimlik>`); boşsa veritabanı adı |
 | `YTDLP_JS_RUNTIMES` | `deno,node` | YouTube imza çözümü için JS ortamı. Biri kurulu olmalı (Node ≥ 22); yoksa indirme HTTP 403 verir |
+| `EMOTION_API_URL` | — (zorunlu, örn. `http://127.0.0.1:31531`) | Parça duygu analizi: NoemaVibeAPI `nlp-service` (`POST /classifyEmotion`). Servis yalnızca 127.0.0.1'i dinlediği için uygulama NoemaVibeAPI ile aynı sunucuda çalışmalı. `EMOTION_API_CONCURRENCY` (varsayılan 8) eşzamanlı istek sayısı, `EMOTION_ENABLED=false` otomatik ölçümü kapatır |
 
 ## Veritabanı tablolarını parçalama
 
@@ -112,6 +116,20 @@ UI'daki **Veritabanı** sekmesinde: tablo → kimlik kolonu → parçalanacak ko
 kolonları, filtre (`kolon = değer`, boşlar için `NULL`) → satır sayısı. HTML içerik paragraf yapısı korunarak
 temizlenir. Başlık her parçanın embedding'ine bağlam olarak eklenir. Kısa kayıtlar (ör. SSS) için strateji
 **Tek parça** seçilebilir. Yalnızca SELECT çalıştırılır; tablo ve kolon adları şemadan doğrulanır.
+
+## Parçaların duygu analizi
+
+Parçalar, NoemaVibeEmotionAI projesindeki duygu servisine gönderilip her parçanın duygusu (avatar hareketi) ölçülür.
+
+```powershell
+# NoemaVibeEmotionAI klasöründe
+node js/server.js            # http://localhost:8080
+```
+
+Kenar çubuğundaki **Parçaların duygusunu otomatik ölç** işaretliyse **Sonuçlar** sekmesinde her kaynağın duygu
+dağılımı ve her parça kartında duygu + güven görünür (düşük güvenliler işaretlenir). İşaretsizse ya da servis
+kapalıysa sonuçta **Duygu analizi yap** düğmesi çıkar. Gönderilen parçalar servisin kendi panelinde de
+(`http://localhost:8080/`) görülebilir.
 
 ## Kayıt: önizleme ya da otomatik
 

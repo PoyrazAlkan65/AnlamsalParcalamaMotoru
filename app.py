@@ -9,7 +9,7 @@ from typing import Callable
 import streamlit as st
 
 import config
-from connectors import sql_source
+from connectors import emotion_client, sql_source
 from core.pipeline import (
     OUTPUT_KINDS,
     BatchResult,
@@ -145,6 +145,20 @@ with st.sidebar:
             # JSONL/Parquet parça vektörlerini taşır
             disabled=kind != "txt" and not chunk_enabled,
         )
+
+    st.divider()
+    st.subheader("Duygu analizi")
+    st.checkbox(
+        "Parçaların duygusunu otomatik ölç",
+        value=config.EMOTION_ENABLED,
+        key="auto_emotion",
+        disabled=not chunk_enabled,
+        help="Parçalar NoemaVibeAPI duygu servisine gönderilir; sonuç her parçanın kartında görünür.",
+    )
+    st.caption(
+        f"Servis: `{config.EMOTION_API_URL}`" if config.EMOTION_API_URL
+        else "Servis: :red[EMOTION_API_URL .env'de tanımlı değil]"
+    )
 
     st.divider()
     if st.button("Sonuçları temizle", width="stretch"):
@@ -577,11 +591,74 @@ def _qdrant_section(entry: dict, qdrant_info: dict, chunk_count: int) -> None:
             _publish_later(entry, qdrant=True)
 
 
-def _chunk_cards(chunks) -> None:
+# ---- Duygu analizi (NoemaVibeEmotionAI) ----
+_EMOTION_COLORS = {
+    "wave": "blue", "clap": "orange", "cheer": "green", "bounce": "orange", "dance": "violet",
+    "laugh": "green", "nod": "blue", "bow": "violet", "think": "gray", "sad": "red", "none": "gray",
+}
+# Bu güvenin altındaki tahminler kartta "düşük güven" olarak işaretlenir
+_EMOTION_LOW_CONF = 0.3
+
+
+def _run_emotion(entry: dict, texts: list[str], ids: list[str], source: str) -> None:
+    try:
+        with st.spinner(f"{len(texts)} parçanın duygusu ölçülüyor…"):
+            entry["emotions"] = emotion_client.analyze_chunks(texts, source=source, ids=ids)
+        entry.pop("emotion_error", None)
+    except Exception as e:
+        entry["emotion_error"] = str(e)
+
+
+def _emotion_section(entry: dict, texts: list[str], ids: list[str], source: str) -> list[dict] | None:
+    """Parçaların duygusunu (gerekirse) ölçer ve özetini gösterir; parça sırasıyla sonuç listesi döner."""
+    if not texts:
+        return None
+    if "emotions" not in entry and "emotion_error" not in entry and st.session_state.get("auto_emotion"):
+        _run_emotion(entry, texts, ids, source)
+
+    emotions = entry.get("emotions")
+    if emotions:
+        counts: dict[str, list] = {}
+        for e in emotions:
+            counts.setdefault(e["emotion"], [e.get("emotionTr", e["emotion"]), 0])[1] += 1
+        st.markdown(
+            "**Duygu dağılımı:** "
+            + "  ".join(
+                f":{_EMOTION_COLORS.get(k, 'gray')}-badge[{name} · {n}]"
+                for k, (name, n) in sorted(counts.items(), key=lambda kv: -kv[1][1])
+            )
+        )
+        return emotions
+
+    cols = st.columns([4, 1], vertical_alignment="center")
+    if entry.get("emotion_error"):
+        cols[0].warning(f"Duygu analizi yapılamadı — {entry['emotion_error']}")
+        label = "Tekrar dene"
+    else:
+        cols[0].info(f"{len(texts)} parçanın duygusu henüz ölçülmedi.")
+        label = "Duygu analizi yap"
+    if cols[1].button(label, key=f"emo_{entry['id']}", width="stretch"):
+        _run_emotion(entry, texts, ids, source)
+        st.rerun()
+    return None
+
+
+def _emotion_badge(e: dict) -> None:
+    conf = e.get("confidence", 0.0)
+    text = f":{_EMOTION_COLORS.get(e['emotion'], 'gray')}-badge[{e.get('emotionTr', e['emotion'])} · %{conf * 100:.0f}]"
+    if conf < _EMOTION_LOW_CONF:
+        text += " :gray[düşük güven]"
+    top = ", ".join(f"{s['label']} %{s['p'] * 100:.0f}" for s in e.get("scores", [])[:3])
+    st.markdown(text, help=f"İlk 3: {top}" if top else None)
+
+
+def _chunk_cards(chunks, emotions: list[dict] | None = None) -> None:
     # st.dataframe kullanılmaz: Arrow serileştirmesi bu ortamda arrow.dll içinde süreci çökertiyor
-    for c in chunks:
+    for i, c in enumerate(chunks):
         with st.container(border=True):
             st.caption(f"#{c.chunk_index} · {c.token_count} token · {len(c.text):,} karakter")
+            if emotions:
+                _emotion_badge(emotions[i])
             if c.question:
                 st.markdown(f"**Soru:** {_md_escape(c.question)}")
             st.markdown(_md_escape(c.text))
@@ -631,9 +708,15 @@ def _render_result(entry: dict) -> None:
         _qdrant_section(entry, res.qdrant_result or {}, res.chunk_count)
 
         if res.chunks:
+            emotions = _emotion_section(
+                entry,
+                [c.text for c in res.chunks],
+                [str(c.chunk_index) for c in res.chunks],
+                doc.source_uri or entry["source"],
+            )
             with st.expander(f"Parçalar ({res.chunk_count})", expanded=True):
                 with st.container(height=520):
-                    _chunk_cards(res.chunks)
+                    _chunk_cards(res.chunks, emotions)
 
         with st.expander("Tam metin"):
             st.text(doc.text)
@@ -661,9 +744,22 @@ def _render_batch(entry: dict) -> None:
 
         _qdrant_section(entry, batch.qdrant_result, batch.chunk_count)
 
+        # Tüm satırların parçaları tek istekte gönderilir; kimlik "<satır kimliği>#<parça no>"
+        all_chunks = [(r, c) for r in batch.results for c in r.chunks]
+        emotions = _emotion_section(
+            entry,
+            [c.text for _, c in all_chunks],
+            [f"{r.document.extra.get('pk')}#{c.chunk_index}" for r, c in all_chunks],
+            batch.source_uri,
+        )
+        row_emotions, offset = [], 0
+        for r in batch.results:
+            row_emotions.append(emotions[offset:offset + r.chunk_count] if emotions else None)
+            offset += r.chunk_count
+
         with st.expander(f"Satırlar ({len(batch.results)})", expanded=True):
             with st.container(height=560):
-                for r in batch.results[:_MAX_ROWS_SHOWN]:
+                for r, r_emotions in zip(batch.results[:_MAX_ROWS_SHOWN], row_emotions):
                     with st.container(border=True):
                         st.markdown(f"**{_md_escape(r.document.title or '')}**")
                         meta = r.document.extra.get("meta") or {}
@@ -671,7 +767,7 @@ def _render_batch(entry: dict) -> None:
                         info += [f"{k}: {v}" for k, v in meta.items()]
                         st.caption(" · ".join(info))
                         if r.chunks:
-                            _chunk_cards(r.chunks)
+                            _chunk_cards(r.chunks, r_emotions)
                         else:
                             st.markdown(_md_escape(r.document.text[:1000]))
             if len(batch.results) > _MAX_ROWS_SHOWN:
