@@ -1,9 +1,11 @@
-"""NoemaVibeAPI nlp-service'teki avatar duygu modeline parça gönderen istemci.
+"""Parçaların avatar duygusunu ölçen istemci; EMOTION_BACKEND ile iki çalışma biçimi vardır.
 
-Sunucu: NoemaVibeAPI/nlp-service/index.js (varsayılan http://127.0.0.1:31531; yalnızca
-        127.0.0.1'i dinler, bu yüzden bu uygulama NoemaVibeAPI ile aynı sunucuda çalışmalıdır)
-İstek:  POST /classifyEmotion  {"Text": "..."}   (parça başına bir istek)
-Yanıt:  {"success": true, "data": {"emotion", "confidence", "scores": {etiket: olasılık}, "modelVersion"}}
+local (varsayılan önerilen): model JSON'u (EMOTION_MODEL_PATH) bu süreçte çalışır, bkz. emotion_model.py.
+api:  NoemaVibeAPI nlp-service'e parça başına istek gider.
+      Sunucu: NoemaVibeAPI/nlp-service/index.js (yalnızca 127.0.0.1'i dinler, bu yüzden bu uygulama
+              NoemaVibeAPI ile aynı sunucuda çalışmalıdır)
+      İstek:  POST /classifyEmotion  {"Text": "..."}
+      Yanıt:  {"success": true, "data": {"emotion", "confidence", "scores": {etiket: olasılık}, "modelVersion"}}
 
 Sonuçlar arayüzün beklediği biçime çevrilir:
     {"index", "id", "text", "emotion", "emotionTr", "confidence", "scores": [{"label", "p"}], "modelVersion"}
@@ -16,6 +18,7 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
 import config
+from connectors import emotion_model
 
 # NoemaVibeEmotionAI/config/labels.json içindeki "tr" alanları
 EMOTION_TR = {
@@ -37,7 +40,22 @@ class EmotionServiceError(RuntimeError):
     pass
 
 
-def _classify(text: str) -> dict:
+def describe_backend() -> str:
+    """Arayüzde gösterilecek kısa açıklama."""
+    if config.EMOTION_BACKEND == "local":
+        return f"Yerel model: `{config.EMOTION_MODEL_PATH}`"
+    return f"Servis: `{config.EMOTION_API_URL}`"
+
+
+def _classify_local(texts: list[str]) -> list[dict]:
+    try:
+        model = emotion_model.get_model(config.EMOTION_MODEL_PATH)
+    except (OSError, ValueError) as e:
+        raise EmotionServiceError(f"Duygu modeli yüklenemedi — {e}") from e
+    return [emotion_model.classify(model, t) for t in texts]
+
+
+def _classify_api(text: str) -> dict:
     if not config.EMOTION_API_URL:
         raise EmotionServiceError("EMOTION_API_URL tanımlı değil; .env dosyasına ekleyin.")
     req = urllib.request.Request(
@@ -65,17 +83,20 @@ def _classify(text: str) -> dict:
 def analyze_chunks(texts: list[str], source: str | None = None, ids: list[str] | None = None) -> list[dict]:
     """Parçaların duygusunu ölçer; sonuçlar `texts` ile aynı sırada döner.
 
-    `source` eski toplu API ile uyum için tutulur; nlp-service kullanmaz.
+    `source` eski toplu API ile uyum için tutulur; kullanılmaz.
     """
     if not texts:
         return []
     ids = ids or [None] * len(texts)
-    # Boş parçalar servise gönderilmez (400 döner), "none" sayılır
+    # Boş parçalar sınıflandırılmaz (nlp-service 400 döner), "none" sayılır
     to_send = [(i, t) for i, t in enumerate(texts) if t and t.strip()]
-    raw: dict[int, dict] = {}
-    with ThreadPoolExecutor(max_workers=max(1, config.EMOTION_API_CONCURRENCY)) as pool:
-        for i, data in zip((i for i, _ in to_send), pool.map(_classify, (t for _, t in to_send))):
-            raw[i] = data
+    if config.EMOTION_BACKEND == "local":
+        raw = dict(zip((i for i, _ in to_send), _classify_local([t for _, t in to_send])))
+    else:
+        raw = {}
+        with ThreadPoolExecutor(max_workers=max(1, config.EMOTION_API_CONCURRENCY)) as pool:
+            for i, data in zip((i for i, _ in to_send), pool.map(_classify_api, (t for _, t in to_send))):
+                raw[i] = data
 
     results = []
     for i, (text, cid) in enumerate(zip(texts, ids)):

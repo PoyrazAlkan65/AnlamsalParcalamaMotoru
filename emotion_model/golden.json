@@ -1,0 +1,2249 @@
+{
+ "modelVersion": "2026-11-04-C",
+ "cases": [
+  {
+   "text": "",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.08134636,
+    "bow": 0.08892027,
+    "cheer": 0.08617836,
+    "clap": 0.08952573,
+    "dance": 0.09169154,
+    "laugh": 0.09788097,
+    "nod": 0.09666072,
+    "none": 0.0912846,
+    "sad": 0.09250319,
+    "think": 0.08899597,
+    "wave": 0.09501228
+   }
+  },
+  {
+   "text": "   ",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.08134636,
+    "bow": 0.08892027,
+    "cheer": 0.08617836,
+    "clap": 0.08952573,
+    "dance": 0.09169154,
+    "laugh": 0.09788097,
+    "nod": 0.09666072,
+    "none": 0.0912846,
+    "sad": 0.09250319,
+    "think": 0.08899597,
+    "wave": 0.09501228
+   }
+  },
+  {
+   "text": "İSTANBUL'DA IŞIK",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.08588329,
+    "bow": 0.08310411,
+    "cheer": 0.0987636,
+    "clap": 0.09989048,
+    "dance": 0.08851352,
+    "laugh": 0.11096547,
+    "nod": 0.09434338,
+    "none": 0.08616315,
+    "sad": 0.10613657,
+    "think": 0.07167322,
+    "wave": 0.0745632
+   }
+  },
+  {
+   "text": "Işıl ılık süt içti",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.07385284,
+    "bow": 0.10363774,
+    "cheer": 0.08014447,
+    "clap": 0.10210138,
+    "dance": 0.08610786,
+    "laugh": 0.08888295,
+    "nod": 0.09934228,
+    "none": 0.0730888,
+    "sad": 0.11700426,
+    "think": 0.100755,
+    "wave": 0.07508242
+   }
+  },
+  {
+   "text": "HARİKAAAA!!!",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.10160524,
+    "bow": 0.09269103,
+    "cheer": 0.11439759,
+    "clap": 0.08748918,
+    "dance": 0.09165237,
+    "laugh": 0.09844754,
+    "nod": 0.0852113,
+    "none": 0.08898239,
+    "sad": 0.0791195,
+    "think": 0.07179661,
+    "wave": 0.08860726
+   }
+  },
+  {
+   "text": "çok güzelll",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.06964724,
+    "bow": 0.07583101,
+    "cheer": 0.17009049,
+    "clap": 0.12799151,
+    "dance": 0.0785367,
+    "laugh": 0.10323716,
+    "nod": 0.06547642,
+    "none": 0.06502183,
+    "sad": 0.09099686,
+    "think": 0.07080744,
+    "wave": 0.08236335
+   }
+  },
+  {
+   "text": "😂😂😂",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.06680688,
+    "bow": 0.07260599,
+    "cheer": 0.07017375,
+    "clap": 0.07302081,
+    "dance": 0.07491531,
+    "laugh": 0.26434161,
+    "nod": 0.07834933,
+    "none": 0.07445215,
+    "sad": 0.07514575,
+    "think": 0.07287352,
+    "wave": 0.0773149
+   }
+  },
+  {
+   "text": "selam 👋👋👋",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.06695726,
+    "bow": 0.07855544,
+    "cheer": 0.07798258,
+    "clap": 0.08178895,
+    "dance": 0.08444076,
+    "laugh": 0.07429506,
+    "nod": 0.08752715,
+    "none": 0.07532141,
+    "sad": 0.07858576,
+    "think": 0.07969616,
+    "wave": 0.21484948
+   }
+  },
+  {
+   "text": "  çok   fazla    boşluk  ",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.07961158,
+    "bow": 0.08169059,
+    "cheer": 0.15259044,
+    "clap": 0.09020379,
+    "dance": 0.07498832,
+    "laugh": 0.12116126,
+    "nod": 0.0706897,
+    "none": 0.0735664,
+    "sad": 0.10548501,
+    "think": 0.08002127,
+    "wave": 0.06999164
+   }
+  },
+  {
+   "text": "https://ornek.com bak buna",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.0834622,
+    "bow": 0.07123665,
+    "cheer": 0.08671356,
+    "clap": 0.14224615,
+    "dance": 0.08972268,
+    "laugh": 0.08113004,
+    "nod": 0.07519831,
+    "none": 0.07805862,
+    "sad": 0.08645185,
+    "think": 0.09278641,
+    "wave": 0.11299354
+   }
+  },
+  {
+   "text": "Rüyamda KEDİ gördüm",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.06292654,
+    "bow": 0.05909203,
+    "cheer": 0.07266623,
+    "clap": 0.0703161,
+    "dance": 0.08584314,
+    "laugh": 0.07588581,
+    "nod": 0.07162501,
+    "none": 0.28992184,
+    "sad": 0.07256072,
+    "think": 0.06644356,
+    "wave": 0.07271902
+   }
+  },
+  {
+   "text": "ruyamda kedi gordum",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.06292654,
+    "bow": 0.05909203,
+    "cheer": 0.07266623,
+    "clap": 0.0703161,
+    "dance": 0.08584314,
+    "laugh": 0.07588581,
+    "nod": 0.07162501,
+    "none": 0.28992184,
+    "sad": 0.07256072,
+    "think": 0.06644356,
+    "wave": 0.07271902
+   }
+  },
+  {
+   "text": "teşekkür’ler",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.06071355,
+    "bow": 0.3516574,
+    "cheer": 0.05908419,
+    "clap": 0.07788059,
+    "dance": 0.0609489,
+    "laugh": 0.06315214,
+    "nod": 0.07038887,
+    "none": 0.06127009,
+    "sad": 0.06115409,
+    "think": 0.05935389,
+    "wave": 0.07439629
+   }
+  },
+  {
+   "text": "a",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.07632103,
+    "bow": 0.08467777,
+    "cheer": 0.0860503,
+    "clap": 0.09896607,
+    "dance": 0.08598636,
+    "laugh": 0.13480855,
+    "nod": 0.08574104,
+    "none": 0.10454736,
+    "sad": 0.08070665,
+    "think": 0.08601548,
+    "wave": 0.07617939
+   }
+  },
+  {
+   "text": "?!",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.09407307,
+    "bow": 0.08653602,
+    "cheer": 0.09798347,
+    "clap": 0.08664582,
+    "dance": 0.08911519,
+    "laugh": 0.09533479,
+    "nod": 0.09324904,
+    "none": 0.08826898,
+    "sad": 0.08986232,
+    "think": 0.08639206,
+    "wave": 0.09253924
+   }
+  },
+  {
+   "text": "Merhaba\nnasılsın\tbugün",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.07221264,
+    "bow": 0.06826521,
+    "cheer": 0.10906226,
+    "clap": 0.1013013,
+    "dance": 0.07696214,
+    "laugh": 0.07897011,
+    "nod": 0.07451886,
+    "none": 0.09170392,
+    "sad": 0.08147861,
+    "think": 0.14560441,
+    "wave": 0.09992053
+   }
+  },
+  {
+   "text": "bravo sana",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.08633574,
+    "bow": 0.08791798,
+    "cheer": 0.06900638,
+    "clap": 0.2335472,
+    "dance": 0.08015399,
+    "laugh": 0.07514203,
+    "nod": 0.06539433,
+    "none": 0.07986648,
+    "sad": 0.07314754,
+    "think": 0.07365236,
+    "wave": 0.07583598
+   }
+  },
+  {
+   "text": "bu ne anlama geliyor",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.08006968,
+    "bow": 0.06763141,
+    "cheer": 0.06481394,
+    "clap": 0.06617335,
+    "dance": 0.11494653,
+    "laugh": 0.075445,
+    "nod": 0.09549203,
+    "none": 0.05970439,
+    "sad": 0.07527075,
+    "think": 0.2208623,
+    "wave": 0.07959059
+   }
+  },
+  {
+   "text": "yardımın için minnettarım",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.08177284,
+    "bow": 0.20655322,
+    "cheer": 0.08849376,
+    "clap": 0.09117629,
+    "dance": 0.06537762,
+    "laugh": 0.07214531,
+    "nod": 0.07044271,
+    "none": 0.09110357,
+    "sad": 0.07642964,
+    "think": 0.08319556,
+    "wave": 0.07330948
+   }
+  },
+  {
+   "text": "cok komik ya",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.07183106,
+    "bow": 0.07088747,
+    "cheer": 0.08911625,
+    "clap": 0.07204076,
+    "dance": 0.06704552,
+    "laugh": 0.28318787,
+    "nod": 0.06127174,
+    "none": 0.07419141,
+    "sad": 0.08633155,
+    "think": 0.06229175,
+    "wave": 0.06180462
+   }
+  },
+  {
+   "text": "bay bay yarın konuşuruz",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.10058901,
+    "bow": 0.07069613,
+    "cheer": 0.06230505,
+    "clap": 0.07777801,
+    "dance": 0.08538181,
+    "laugh": 0.07008972,
+    "nod": 0.06687299,
+    "none": 0.10548773,
+    "sad": 0.06310816,
+    "think": 0.06377092,
+    "wave": 0.23392046
+   }
+  },
+  {
+   "text": "bunu bir düşüneyim",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.07046556,
+    "bow": 0.0636724,
+    "cheer": 0.10298472,
+    "clap": 0.10124014,
+    "dance": 0.08294425,
+    "laugh": 0.0878772,
+    "nod": 0.07565974,
+    "none": 0.11097258,
+    "sad": 0.09438426,
+    "think": 0.12557223,
+    "wave": 0.08422692
+   }
+  },
+  {
+   "text": "rüyamda bir denizin ortasındaydım",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.06381363,
+    "bow": 0.05549274,
+    "cheer": 0.06875536,
+    "clap": 0.06020294,
+    "dance": 0.06761677,
+    "laugh": 0.06571786,
+    "nod": 0.07175402,
+    "none": 0.33863608,
+    "sad": 0.07026171,
+    "think": 0.06947485,
+    "wave": 0.06827405
+   }
+  },
+  {
+   "text": "rüyamda bir köpek yavrusu vardı",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.05999581,
+    "bow": 0.07234048,
+    "cheer": 0.06337271,
+    "clap": 0.06152581,
+    "dance": 0.06739891,
+    "laugh": 0.07392938,
+    "nod": 0.06433442,
+    "none": 0.34965311,
+    "sad": 0.06066211,
+    "think": 0.06023848,
+    "wave": 0.06654877
+   }
+  },
+  {
+   "text": "iyi degilim ya",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.05812117,
+    "bow": 0.07024878,
+    "cheer": 0.06341712,
+    "clap": 0.0623376,
+    "dance": 0.07495179,
+    "laugh": 0.06439058,
+    "nod": 0.06361071,
+    "none": 0.06784966,
+    "sad": 0.29417804,
+    "think": 0.11727845,
+    "wave": 0.06361611
+   }
+  },
+  {
+   "text": "he he aynen",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.09282695,
+    "bow": 0.07668193,
+    "cheer": 0.0892069,
+    "clap": 0.09388004,
+    "dance": 0.08994752,
+    "laugh": 0.08434056,
+    "nod": 0.10504126,
+    "none": 0.07604943,
+    "sad": 0.08709617,
+    "think": 0.08851682,
+    "wave": 0.11641241
+   }
+  },
+  {
+   "text": "OHAA gerçekten mi",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.17337412,
+    "bow": 0.07559163,
+    "cheer": 0.07268458,
+    "clap": 0.0768086,
+    "dance": 0.10172604,
+    "laugh": 0.12330608,
+    "nod": 0.07499335,
+    "none": 0.06985742,
+    "sad": 0.07232326,
+    "think": 0.07227182,
+    "wave": 0.0870631
+   }
+  },
+  {
+   "text": "selamlar herkese 👋",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.0634686,
+    "bow": 0.08876111,
+    "cheer": 0.09496377,
+    "clap": 0.07244405,
+    "dance": 0.07397223,
+    "laugh": 0.06455947,
+    "nod": 0.07349485,
+    "none": 0.06908577,
+    "sad": 0.07363952,
+    "think": 0.06853755,
+    "wave": 0.25707308
+   }
+  },
+  {
+   "text": "asdf",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.07623378,
+    "bow": 0.07043443,
+    "cheer": 0.07335749,
+    "clap": 0.07579857,
+    "dance": 0.08246153,
+    "laugh": 0.09278304,
+    "nod": 0.08247798,
+    "none": 0.20710415,
+    "sad": 0.07864211,
+    "think": 0.08594607,
+    "wave": 0.07476085
+   }
+  },
+  {
+   "text": "doğum günümde herkes beni hatırlamış 😊",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.07628615,
+    "bow": 0.05792338,
+    "cheer": 0.21704344,
+    "clap": 0.0803951,
+    "dance": 0.07731406,
+    "laugh": 0.07123811,
+    "nod": 0.0785599,
+    "none": 0.06702081,
+    "sad": 0.08938574,
+    "think": 0.0681737,
+    "wave": 0.11665959
+   }
+  },
+  {
+   "text": "halay çekelim mi",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.08612128,
+    "bow": 0.07206187,
+    "cheer": 0.0778898,
+    "clap": 0.07283679,
+    "dance": 0.22895103,
+    "laugh": 0.0737897,
+    "nod": 0.07501094,
+    "none": 0.06828601,
+    "sad": 0.08559181,
+    "think": 0.07251777,
+    "wave": 0.08694299
+   }
+  },
+  {
+   "text": "bugün hiç iyi değilim",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.04862643,
+    "bow": 0.05711199,
+    "cheer": 0.09580495,
+    "clap": 0.07034151,
+    "dance": 0.07129539,
+    "laugh": 0.04948316,
+    "nod": 0.0557834,
+    "none": 0.0703287,
+    "sad": 0.33297114,
+    "think": 0.08885724,
+    "wave": 0.0593961
+   }
+  },
+  {
+   "text": "kardeşim doğdu",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.0605465,
+    "bow": 0.07592543,
+    "cheer": 0.228006,
+    "clap": 0.064444,
+    "dance": 0.06528404,
+    "laugh": 0.08021112,
+    "nod": 0.08853149,
+    "none": 0.08617995,
+    "sad": 0.08592446,
+    "think": 0.0984503,
+    "wave": 0.06649671
+   }
+  },
+  {
+   "text": "emin değilim",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.06178232,
+    "bow": 0.08421931,
+    "cheer": 0.06429156,
+    "clap": 0.07841906,
+    "dance": 0.0714157,
+    "laugh": 0.06330679,
+    "nod": 0.07155864,
+    "none": 0.06986702,
+    "sad": 0.20644771,
+    "think": 0.16737421,
+    "wave": 0.06131767
+   }
+  },
+  {
+   "text": "peki öyle yapalım",
+   "emotion": "nod",
+   "scores": {
+    "bounce": 0.06233329,
+    "bow": 0.06548243,
+    "cheer": 0.05741059,
+    "clap": 0.07714386,
+    "dance": 0.07811061,
+    "laugh": 0.06373144,
+    "nod": 0.27623334,
+    "none": 0.07235681,
+    "sad": 0.0835583,
+    "think": 0.10333318,
+    "wave": 0.06030615
+   }
+  },
+  {
+   "text": "olur",
+   "emotion": "nod",
+   "scores": {
+    "bounce": 0.06771207,
+    "bow": 0.09454746,
+    "cheer": 0.07275854,
+    "clap": 0.08569271,
+    "dance": 0.06823715,
+    "laugh": 0.08710696,
+    "nod": 0.20900407,
+    "none": 0.07110781,
+    "sad": 0.07294019,
+    "think": 0.09055532,
+    "wave": 0.08033772
+   }
+  },
+  {
+   "text": "aferin bana bugün tüm görevleri bitirdim",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.07263196,
+    "bow": 0.06428044,
+    "cheer": 0.12574965,
+    "clap": 0.21071269,
+    "dance": 0.0689778,
+    "laugh": 0.06268426,
+    "nod": 0.0626502,
+    "none": 0.10153157,
+    "sad": 0.07670313,
+    "think": 0.07337841,
+    "wave": 0.08069988
+   }
+  },
+  {
+   "text": "helal olsun emeğine",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.06608792,
+    "bow": 0.09671984,
+    "cheer": 0.07138466,
+    "clap": 0.21031819,
+    "dance": 0.07565649,
+    "laugh": 0.06933889,
+    "nod": 0.0889701,
+    "none": 0.06235139,
+    "sad": 0.07641775,
+    "think": 0.09476195,
+    "wave": 0.08799282
+   }
+  },
+  {
+   "text": "mutluluktan ağlayacağım",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.06533141,
+    "bow": 0.07527548,
+    "cheer": 0.23133633,
+    "clap": 0.07131816,
+    "dance": 0.11098496,
+    "laugh": 0.07706191,
+    "nod": 0.07569545,
+    "none": 0.07294437,
+    "sad": 0.07968313,
+    "think": 0.07242248,
+    "wave": 0.06794632
+   }
+  },
+  {
+   "text": "cok uzgunum",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.07542458,
+    "bow": 0.06903304,
+    "cheer": 0.16071884,
+    "clap": 0.10588309,
+    "dance": 0.07832235,
+    "laugh": 0.10584578,
+    "nod": 0.06808694,
+    "none": 0.06827796,
+    "sad": 0.12439863,
+    "think": 0.07051327,
+    "wave": 0.07349552
+   }
+  },
+  {
+   "text": "rica ederim ne demek",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.06229105,
+    "bow": 0.25772799,
+    "cheer": 0.06693768,
+    "clap": 0.07721217,
+    "dance": 0.06857177,
+    "laugh": 0.06635012,
+    "nod": 0.06055024,
+    "none": 0.08100597,
+    "sad": 0.08043431,
+    "think": 0.11489675,
+    "wave": 0.06402195
+   }
+  },
+  {
+   "text": "yarın toplantım var",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.12731708,
+    "bow": 0.1120662,
+    "cheer": 0.06895122,
+    "clap": 0.08146474,
+    "dance": 0.05768697,
+    "laugh": 0.06645691,
+    "nod": 0.06831617,
+    "none": 0.18272047,
+    "sad": 0.06640522,
+    "think": 0.07339086,
+    "wave": 0.09522416
+   }
+  },
+  {
+   "text": "keyifsizim bugün",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.06665638,
+    "bow": 0.06166421,
+    "cheer": 0.16177961,
+    "clap": 0.09919983,
+    "dance": 0.08101313,
+    "laugh": 0.06883812,
+    "nod": 0.07331855,
+    "none": 0.10982912,
+    "sad": 0.1252343,
+    "think": 0.0782263,
+    "wave": 0.07424046
+   }
+  },
+  {
+   "text": "hiç keyfim yok",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.06891206,
+    "bow": 0.07321248,
+    "cheer": 0.12540511,
+    "clap": 0.07208011,
+    "dance": 0.07786341,
+    "laugh": 0.08440883,
+    "nod": 0.07860321,
+    "none": 0.07590438,
+    "sad": 0.19418927,
+    "think": 0.07468455,
+    "wave": 0.0747366
+   }
+  },
+  {
+   "text": "selam ben geldim",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.06765601,
+    "bow": 0.06307298,
+    "cheer": 0.07768311,
+    "clap": 0.06913117,
+    "dance": 0.09124095,
+    "laugh": 0.06584966,
+    "nod": 0.0714001,
+    "none": 0.07134185,
+    "sad": 0.07839735,
+    "think": 0.0796354,
+    "wave": 0.26459143
+   }
+  },
+  {
+   "text": "bugün markete gittim",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.0648853,
+    "bow": 0.07073399,
+    "cheer": 0.13742325,
+    "clap": 0.13092441,
+    "dance": 0.10238469,
+    "laugh": 0.06543273,
+    "nod": 0.0706754,
+    "none": 0.09325817,
+    "sad": 0.10216218,
+    "think": 0.07906846,
+    "wave": 0.08305142
+   }
+  },
+  {
+   "text": "vay canına buna inanamıyorum",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.34901851,
+    "bow": 0.05485968,
+    "cheer": 0.05620399,
+    "clap": 0.07046157,
+    "dance": 0.08066384,
+    "laugh": 0.05563862,
+    "nod": 0.06097898,
+    "none": 0.06556121,
+    "sad": 0.07355386,
+    "think": 0.06900511,
+    "wave": 0.06405465
+   }
+  },
+  {
+   "text": "hahahaha",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.06121343,
+    "bow": 0.06357057,
+    "cheer": 0.06891473,
+    "clap": 0.06817829,
+    "dance": 0.07521923,
+    "laugh": 0.32134185,
+    "nod": 0.07226308,
+    "none": 0.06417071,
+    "sad": 0.06920819,
+    "think": 0.06361483,
+    "wave": 0.07230509
+   }
+  },
+  {
+   "text": "gunaydin",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.07512448,
+    "bow": 0.06985549,
+    "cheer": 0.09594159,
+    "clap": 0.08821402,
+    "dance": 0.0817239,
+    "laugh": 0.07769436,
+    "nod": 0.07526433,
+    "none": 0.08934853,
+    "sad": 0.07236309,
+    "think": 0.06847856,
+    "wave": 0.20599165
+   }
+  },
+  {
+   "text": "bir fıkra anlat",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.07172887,
+    "bow": 0.06348551,
+    "cheer": 0.08306886,
+    "clap": 0.07524219,
+    "dance": 0.072297,
+    "laugh": 0.18593684,
+    "nod": 0.09591835,
+    "none": 0.11687275,
+    "sad": 0.0798966,
+    "think": 0.08817833,
+    "wave": 0.06737469
+   }
+  },
+  {
+   "text": "hey naber",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.08020119,
+    "bow": 0.06313253,
+    "cheer": 0.06124079,
+    "clap": 0.07231392,
+    "dance": 0.06275929,
+    "laugh": 0.06370564,
+    "nod": 0.06447925,
+    "none": 0.06207119,
+    "sad": 0.07317558,
+    "think": 0.07401788,
+    "wave": 0.32290274
+   }
+  },
+  {
+   "text": "tamam",
+   "emotion": "nod",
+   "scores": {
+    "bounce": 0.06776071,
+    "bow": 0.06778153,
+    "cheer": 0.06502996,
+    "clap": 0.07526429,
+    "dance": 0.07374173,
+    "laugh": 0.06673373,
+    "nod": 0.30104226,
+    "none": 0.07106688,
+    "sad": 0.06738865,
+    "think": 0.07030068,
+    "wave": 0.07388957
+   }
+  },
+  {
+   "text": "sabahtan beri moralim bozuk",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.08384238,
+    "bow": 0.08331181,
+    "cheer": 0.0836622,
+    "clap": 0.09940857,
+    "dance": 0.08528672,
+    "laugh": 0.08110921,
+    "nod": 0.08047484,
+    "none": 0.07408328,
+    "sad": 0.14553971,
+    "think": 0.09108267,
+    "wave": 0.09219861
+   }
+  },
+  {
+   "text": "saat kaç",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.07031573,
+    "bow": 0.08700605,
+    "cheer": 0.0810312,
+    "clap": 0.08690336,
+    "dance": 0.08489369,
+    "laugh": 0.09106608,
+    "nod": 0.08011226,
+    "none": 0.18059088,
+    "sad": 0.08546777,
+    "think": 0.0699386,
+    "wave": 0.08267438
+   }
+  },
+  {
+   "text": "moralim hiç yerinde değil",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.07253657,
+    "bow": 0.07465123,
+    "cheer": 0.09258173,
+    "clap": 0.0793959,
+    "dance": 0.07317182,
+    "laugh": 0.06386159,
+    "nod": 0.07385728,
+    "none": 0.06966811,
+    "sad": 0.24110126,
+    "think": 0.09386641,
+    "wave": 0.06530809
+   }
+  },
+  {
+   "text": "rüyamda eski evimizi gördüm",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.0642884,
+    "bow": 0.06448286,
+    "cheer": 0.07788855,
+    "clap": 0.08361767,
+    "dance": 0.08151656,
+    "laugh": 0.06920235,
+    "nod": 0.07176981,
+    "none": 0.2862567,
+    "sad": 0.07282232,
+    "think": 0.061737,
+    "wave": 0.06641778
+   }
+  },
+  {
+   "text": "çay demledim",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.07231776,
+    "bow": 0.08827669,
+    "cheer": 0.08961808,
+    "clap": 0.06540158,
+    "dance": 0.08053949,
+    "laugh": 0.06566566,
+    "nod": 0.07230548,
+    "none": 0.18572898,
+    "sad": 0.09008749,
+    "think": 0.10757689,
+    "wave": 0.08248189
+   }
+  },
+  {
+   "text": "çok teşekkür ederim",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.05770663,
+    "bow": 0.37940554,
+    "cheer": 0.07241644,
+    "clap": 0.06910891,
+    "dance": 0.05318488,
+    "laugh": 0.06692714,
+    "nod": 0.06032439,
+    "none": 0.05511379,
+    "sad": 0.06891445,
+    "think": 0.06130239,
+    "wave": 0.05559544
+   }
+  },
+  {
+   "text": "vay be inanılmaz",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.247543,
+    "bow": 0.07447019,
+    "cheer": 0.06743988,
+    "clap": 0.07317656,
+    "dance": 0.07832609,
+    "laugh": 0.06762867,
+    "nod": 0.06960184,
+    "none": 0.0842741,
+    "sad": 0.07556691,
+    "think": 0.07397001,
+    "wave": 0.08800274
+   }
+  },
+  {
+   "text": "sokakta kaybolan kedimiz eve döndü!!",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.06982134,
+    "bow": 0.07117204,
+    "cheer": 0.21686096,
+    "clap": 0.09945284,
+    "dance": 0.0681694,
+    "laugh": 0.07221674,
+    "nod": 0.08717683,
+    "none": 0.08811302,
+    "sad": 0.08231828,
+    "think": 0.07661425,
+    "wave": 0.0680843
+   }
+  },
+  {
+   "text": "harika iş çıkardın gerçekten",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.13792656,
+    "bow": 0.0928798,
+    "cheer": 0.10224431,
+    "clap": 0.08526879,
+    "dance": 0.07994986,
+    "laugh": 0.12444693,
+    "nod": 0.07280745,
+    "none": 0.07491577,
+    "sad": 0.07241546,
+    "think": 0.06760518,
+    "wave": 0.0895399
+   }
+  },
+  {
+   "text": "anladım tamamdır",
+   "emotion": "nod",
+   "scores": {
+    "bounce": 0.06237962,
+    "bow": 0.06166288,
+    "cheer": 0.0736682,
+    "clap": 0.07033426,
+    "dance": 0.07050048,
+    "laugh": 0.08713488,
+    "nod": 0.26152739,
+    "none": 0.08991808,
+    "sad": 0.07206284,
+    "think": 0.08024007,
+    "wave": 0.07057129
+   }
+  },
+  {
+   "text": "tesekkurler noema",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.05916498,
+    "bow": 0.32992185,
+    "cheer": 0.05748217,
+    "clap": 0.07397639,
+    "dance": 0.06176217,
+    "laugh": 0.06206102,
+    "nod": 0.06739104,
+    "none": 0.06033529,
+    "sad": 0.05851858,
+    "think": 0.06531704,
+    "wave": 0.10406945
+   }
+  },
+  {
+   "text": "haklısın",
+   "emotion": "nod",
+   "scores": {
+    "bounce": 0.07434963,
+    "bow": 0.0721027,
+    "cheer": 0.07443556,
+    "clap": 0.10382447,
+    "dance": 0.07917895,
+    "laugh": 0.10567794,
+    "nod": 0.20148892,
+    "none": 0.06819923,
+    "sad": 0.07402783,
+    "think": 0.06952091,
+    "wave": 0.07719386
+   }
+  },
+  {
+   "text": "nasıl karar vereyim bilmiyorum",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.12157682,
+    "bow": 0.05878079,
+    "cheer": 0.06482229,
+    "clap": 0.06258343,
+    "dance": 0.08009837,
+    "laugh": 0.06432564,
+    "nod": 0.06530999,
+    "none": 0.06976,
+    "sad": 0.08585379,
+    "think": 0.25876435,
+    "wave": 0.06812454
+   }
+  },
+  {
+   "text": "ahahah ciddi misin",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.06616768,
+    "bow": 0.06195961,
+    "cheer": 0.06319477,
+    "clap": 0.06848907,
+    "dance": 0.07489824,
+    "laugh": 0.33364865,
+    "nod": 0.0831083,
+    "none": 0.06238124,
+    "sad": 0.06548228,
+    "think": 0.05739236,
+    "wave": 0.06327781
+   }
+  },
+  {
+   "text": "merhabalar naber",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.06314179,
+    "bow": 0.07185545,
+    "cheer": 0.05986627,
+    "clap": 0.07050989,
+    "dance": 0.06718479,
+    "laugh": 0.06753803,
+    "nod": 0.06331293,
+    "none": 0.06086591,
+    "sad": 0.07056499,
+    "think": 0.0796926,
+    "wave": 0.32546736
+   }
+  },
+  {
+   "text": "bu aralar hiç iyi değilim",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.05252416,
+    "bow": 0.06752184,
+    "cheer": 0.06305935,
+    "clap": 0.05995303,
+    "dance": 0.07733295,
+    "laugh": 0.05620556,
+    "nod": 0.05918695,
+    "none": 0.06457143,
+    "sad": 0.3062071,
+    "think": 0.11483299,
+    "wave": 0.07860463
+   }
+  },
+  {
+   "text": "cuma geldi kutlama zamanı",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.09426529,
+    "bow": 0.0691081,
+    "cheer": 0.08128178,
+    "clap": 0.07668934,
+    "dance": 0.18666846,
+    "laugh": 0.07873098,
+    "nod": 0.08032866,
+    "none": 0.07064759,
+    "sad": 0.07469418,
+    "think": 0.08215952,
+    "wave": 0.10542609
+   }
+  },
+  {
+   "text": "bu şarkıya bayılıyorum",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.11335114,
+    "bow": 0.06544783,
+    "cheer": 0.06185603,
+    "clap": 0.06498633,
+    "dance": 0.2364708,
+    "laugh": 0.05840361,
+    "nod": 0.08028846,
+    "none": 0.06324066,
+    "sad": 0.08052156,
+    "think": 0.10461596,
+    "wave": 0.07081762
+   }
+  },
+  {
+   "text": "hadi ben kaçtım görüşürüz",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.06416679,
+    "bow": 0.05477635,
+    "cheer": 0.07176129,
+    "clap": 0.07924613,
+    "dance": 0.1059957,
+    "laugh": 0.06832569,
+    "nod": 0.07387908,
+    "none": 0.088964,
+    "sad": 0.07595217,
+    "think": 0.06861765,
+    "wave": 0.24831514
+   }
+  },
+  {
+   "text": "takımımız maçı kazandı",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.07590544,
+    "bow": 0.0709811,
+    "cheer": 0.10260322,
+    "clap": 0.18252853,
+    "dance": 0.09348202,
+    "laugh": 0.07715159,
+    "nod": 0.08349074,
+    "none": 0.09003835,
+    "sad": 0.08643596,
+    "think": 0.06695538,
+    "wave": 0.07042766
+   }
+  },
+  {
+   "text": "alkışı hak ettin",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.06566697,
+    "bow": 0.07021336,
+    "cheer": 0.07060483,
+    "clap": 0.249252,
+    "dance": 0.07887903,
+    "laugh": 0.08063415,
+    "nod": 0.09990311,
+    "none": 0.06730016,
+    "sad": 0.08402369,
+    "think": 0.06309882,
+    "wave": 0.07042387
+   }
+  },
+  {
+   "text": "şaka gibi bir gün yaşadım kahkahalarla güldük",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.05701226,
+    "bow": 0.07540958,
+    "cheer": 0.12745785,
+    "clap": 0.08822561,
+    "dance": 0.09396794,
+    "laugh": 0.12384455,
+    "nod": 0.06577069,
+    "none": 0.11832007,
+    "sad": 0.08698172,
+    "think": 0.06887222,
+    "wave": 0.09413752
+   }
+  },
+  {
+   "text": "düğüne gidiyoruz oynayacağız",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.08340642,
+    "bow": 0.06384431,
+    "cheer": 0.09826279,
+    "clap": 0.07316127,
+    "dance": 0.22681248,
+    "laugh": 0.06507645,
+    "nod": 0.07966659,
+    "none": 0.06996522,
+    "sad": 0.07892565,
+    "think": 0.07620663,
+    "wave": 0.0846722
+   }
+  },
+  {
+   "text": "hadi eğlenelim",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.05694092,
+    "bow": 0.07214486,
+    "cheer": 0.07181442,
+    "clap": 0.08451797,
+    "dance": 0.22876014,
+    "laugh": 0.07204642,
+    "nod": 0.0854109,
+    "none": 0.06633038,
+    "sad": 0.08831408,
+    "think": 0.0809075,
+    "wave": 0.09281241
+   }
+  },
+  {
+   "text": "iyi geceler noema",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.07668638,
+    "bow": 0.10636757,
+    "cheer": 0.07429533,
+    "clap": 0.08063389,
+    "dance": 0.08024414,
+    "laugh": 0.06717598,
+    "nod": 0.06889082,
+    "none": 0.0652537,
+    "sad": 0.0929594,
+    "think": 0.08235626,
+    "wave": 0.20513653
+   }
+  },
+  {
+   "text": "😂😂😂",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.06680688,
+    "bow": 0.07260599,
+    "cheer": 0.07017375,
+    "clap": 0.07302081,
+    "dance": 0.07491531,
+    "laugh": 0.26434161,
+    "nod": 0.07834933,
+    "none": 0.07445215,
+    "sad": 0.07514575,
+    "think": 0.07287352,
+    "wave": 0.0773149
+   }
+  },
+  {
+   "text": "mutlu değilim artık",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.07470889,
+    "bow": 0.06958005,
+    "cheer": 0.11922116,
+    "clap": 0.06783353,
+    "dance": 0.08241807,
+    "laugh": 0.06923419,
+    "nod": 0.07275435,
+    "none": 0.06792005,
+    "sad": 0.20751617,
+    "think": 0.1083485,
+    "wave": 0.06046504
+   }
+  },
+  {
+   "text": "canım hiçbir şey yapmak istemiyor",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.11383811,
+    "bow": 0.06891307,
+    "cheer": 0.07293504,
+    "clap": 0.07574701,
+    "dance": 0.07715128,
+    "laugh": 0.07883626,
+    "nod": 0.07725644,
+    "none": 0.08202397,
+    "sad": 0.16115746,
+    "think": 0.1189958,
+    "wave": 0.07314557
+   }
+  },
+  {
+   "text": "selaam millet",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.08074092,
+    "bow": 0.086206,
+    "cheer": 0.07749326,
+    "clap": 0.08837578,
+    "dance": 0.09028693,
+    "laugh": 0.08071097,
+    "nod": 0.09284984,
+    "none": 0.0853088,
+    "sad": 0.08210755,
+    "think": 0.08565813,
+    "wave": 0.15026182
+   }
+  },
+  {
+   "text": "cumartesi gelsin artık bekleyemiyorum",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.2543673,
+    "bow": 0.06472711,
+    "cheer": 0.063068,
+    "clap": 0.07132179,
+    "dance": 0.10249384,
+    "laugh": 0.06881189,
+    "nod": 0.07926012,
+    "none": 0.06001146,
+    "sad": 0.09010041,
+    "think": 0.07596696,
+    "wave": 0.06987113
+   }
+  },
+  {
+   "text": "yarın tatile çıkıyorum!!!",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.2479371,
+    "bow": 0.07027448,
+    "cheer": 0.06596551,
+    "clap": 0.07218782,
+    "dance": 0.07860196,
+    "laugh": 0.06509314,
+    "nod": 0.09821066,
+    "none": 0.08662934,
+    "sad": 0.06911688,
+    "think": 0.07714305,
+    "wave": 0.06884005
+   }
+  },
+  {
+   "text": "aynen öyle",
+   "emotion": "nod",
+   "scores": {
+    "bounce": 0.06718964,
+    "bow": 0.06660191,
+    "cheer": 0.06334111,
+    "clap": 0.06752502,
+    "dance": 0.07388212,
+    "laugh": 0.07175652,
+    "nod": 0.29509516,
+    "none": 0.06666439,
+    "sad": 0.06295174,
+    "think": 0.09432502,
+    "wave": 0.07066737
+   }
+  },
+  {
+   "text": "heyecandan yerimde duramıyorum",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.31571112,
+    "bow": 0.06144512,
+    "cheer": 0.07565295,
+    "clap": 0.06513016,
+    "dance": 0.07512268,
+    "laugh": 0.05654327,
+    "nod": 0.06829385,
+    "none": 0.06138714,
+    "sad": 0.08649558,
+    "think": 0.07147316,
+    "wave": 0.06274497
+   }
+  },
+  {
+   "text": "cok guzel bir gun gecirdim",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.06347584,
+    "bow": 0.0633859,
+    "cheer": 0.21100651,
+    "clap": 0.12019158,
+    "dance": 0.07149155,
+    "laugh": 0.08959345,
+    "nod": 0.05997299,
+    "none": 0.08532749,
+    "sad": 0.08013372,
+    "think": 0.06842264,
+    "wave": 0.08699834
+   }
+  },
+  {
+   "text": "of sabırsızlanıyorum",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.25350148,
+    "bow": 0.06673319,
+    "cheer": 0.0608252,
+    "clap": 0.06653433,
+    "dance": 0.10758459,
+    "laugh": 0.06406837,
+    "nod": 0.08062005,
+    "none": 0.08330138,
+    "sad": 0.08180496,
+    "think": 0.07559472,
+    "wave": 0.05943173
+   }
+  },
+  {
+   "text": "hmm bilemedim",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.06148573,
+    "bow": 0.07244084,
+    "cheer": 0.09028111,
+    "clap": 0.07989243,
+    "dance": 0.07483135,
+    "laugh": 0.0711469,
+    "nod": 0.07193511,
+    "none": 0.11423507,
+    "sad": 0.07877332,
+    "think": 0.21139875,
+    "wave": 0.07357941
+   }
+  },
+  {
+   "text": "kesinlikle katılıyorum",
+   "emotion": "nod",
+   "scores": {
+    "bounce": 0.1417202,
+    "bow": 0.05944125,
+    "cheer": 0.07527038,
+    "clap": 0.07046143,
+    "dance": 0.0981135,
+    "laugh": 0.06868141,
+    "nod": 0.18508568,
+    "none": 0.06319863,
+    "sad": 0.08617078,
+    "think": 0.09154607,
+    "wave": 0.06031067
+   }
+  },
+  {
+   "text": "çok yalnız hissediyorum",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.11680855,
+    "bow": 0.06008548,
+    "cheer": 0.08228216,
+    "clap": 0.06742154,
+    "dance": 0.17200509,
+    "laugh": 0.07869449,
+    "nod": 0.07154059,
+    "none": 0.06970565,
+    "sad": 0.14167538,
+    "think": 0.07765884,
+    "wave": 0.06212223
+   }
+  },
+  {
+   "text": "iyi değilim bugünlerde",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.05581208,
+    "bow": 0.06608153,
+    "cheer": 0.10776824,
+    "clap": 0.07896567,
+    "dance": 0.07088519,
+    "laugh": 0.05291042,
+    "nod": 0.0629683,
+    "none": 0.07190658,
+    "sad": 0.26059912,
+    "think": 0.10646162,
+    "wave": 0.06564125
+   }
+  },
+  {
+   "text": "yok artık ciddi misin",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.11462958,
+    "bow": 0.08097587,
+    "cheer": 0.08036004,
+    "clap": 0.08640546,
+    "dance": 0.08681179,
+    "laugh": 0.13345821,
+    "nod": 0.09477342,
+    "none": 0.07614944,
+    "sad": 0.10954322,
+    "think": 0.06654076,
+    "wave": 0.07035222
+   }
+  },
+  {
+   "text": "bugün biraz kod yazdım",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.06529005,
+    "bow": 0.05600809,
+    "cheer": 0.11813124,
+    "clap": 0.08867946,
+    "dance": 0.10346996,
+    "laugh": 0.07837644,
+    "nod": 0.06448054,
+    "none": 0.19400867,
+    "sad": 0.08479601,
+    "think": 0.07617951,
+    "wave": 0.07058005
+   }
+  },
+  {
+   "text": "ellerine sağlık süper sunum yaptın",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.06662855,
+    "bow": 0.13878718,
+    "cheer": 0.06647075,
+    "clap": 0.23036323,
+    "dance": 0.06594236,
+    "laugh": 0.06270564,
+    "nod": 0.07396664,
+    "none": 0.0671587,
+    "sad": 0.06890768,
+    "think": 0.08675662,
+    "wave": 0.07231264
+   }
+  },
+  {
+   "text": "sevgilimden ayrıldım",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.06569637,
+    "bow": 0.08241629,
+    "cheer": 0.08984229,
+    "clap": 0.07268051,
+    "dance": 0.08376984,
+    "laugh": 0.07290403,
+    "nod": 0.08546479,
+    "none": 0.09233678,
+    "sad": 0.1443197,
+    "think": 0.11853966,
+    "wave": 0.09202974
+   }
+  },
+  {
+   "text": "bugün çok mutluyum",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.06057148,
+    "bow": 0.05579094,
+    "cheer": 0.29296055,
+    "clap": 0.08281226,
+    "dance": 0.07350367,
+    "laugh": 0.07627206,
+    "nod": 0.06204905,
+    "none": 0.07514203,
+    "sad": 0.09853884,
+    "think": 0.06486298,
+    "wave": 0.05749613
+   }
+  },
+  {
+   "text": "çok heyecanlıyım konser yarın",
+   "emotion": "bounce",
+   "scores": {
+    "bounce": 0.22962105,
+    "bow": 0.0726579,
+    "cheer": 0.08253115,
+    "clap": 0.07275164,
+    "dance": 0.0573245,
+    "laugh": 0.08175672,
+    "nod": 0.0653549,
+    "none": 0.0826236,
+    "sad": 0.08127636,
+    "think": 0.0811586,
+    "wave": 0.09294358
+   }
+  },
+  {
+   "text": "gülmekten karnım ağrıdı",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.09762806,
+    "bow": 0.0784866,
+    "cheer": 0.09922002,
+    "clap": 0.07846502,
+    "dance": 0.07973919,
+    "laugh": 0.18065094,
+    "nod": 0.07171888,
+    "none": 0.07697096,
+    "sad": 0.08104203,
+    "think": 0.07591772,
+    "wave": 0.08016058
+   }
+  },
+  {
+   "text": "her şeyden çok yoruldum",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.10088871,
+    "bow": 0.06804662,
+    "cheer": 0.10442105,
+    "clap": 0.07583238,
+    "dance": 0.07515588,
+    "laugh": 0.12007,
+    "nod": 0.06861147,
+    "none": 0.0692742,
+    "sad": 0.13850348,
+    "think": 0.08158012,
+    "wave": 0.09761609
+   }
+  },
+  {
+   "text": "eskisi gibi değilim artık",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.07773149,
+    "bow": 0.07271676,
+    "cheer": 0.06956676,
+    "clap": 0.09071957,
+    "dance": 0.08875542,
+    "laugh": 0.07309979,
+    "nod": 0.07438434,
+    "none": 0.08217277,
+    "sad": 0.2126242,
+    "think": 0.09585382,
+    "wave": 0.06237508
+   }
+  },
+  {
+   "text": "hiç iyi hissetmiyorum kendimi",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.10146907,
+    "bow": 0.0644821,
+    "cheer": 0.07357553,
+    "clap": 0.0673617,
+    "dance": 0.11345997,
+    "laugh": 0.06441033,
+    "nod": 0.07384416,
+    "none": 0.06354918,
+    "sad": 0.23466315,
+    "think": 0.07329696,
+    "wave": 0.06988785
+   }
+  },
+  {
+   "text": "neden böyle oluyor",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.06530898,
+    "bow": 0.07274699,
+    "cheer": 0.06605395,
+    "clap": 0.06642817,
+    "dance": 0.06424042,
+    "laugh": 0.06615624,
+    "nod": 0.19153314,
+    "none": 0.06579499,
+    "sad": 0.07607999,
+    "think": 0.19775694,
+    "wave": 0.06790018
+   }
+  },
+  {
+   "text": "emeğine sağlık çok naziksin",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.07019222,
+    "bow": 0.1697872,
+    "cheer": 0.08089515,
+    "clap": 0.14798815,
+    "dance": 0.07208916,
+    "laugh": 0.09740865,
+    "nod": 0.06987974,
+    "none": 0.0633943,
+    "sad": 0.07904116,
+    "think": 0.0831664,
+    "wave": 0.06615787
+   }
+  },
+  {
+   "text": "bu sorunu nasıl çözerim",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.06733177,
+    "bow": 0.08502101,
+    "cheer": 0.07797308,
+    "clap": 0.08136134,
+    "dance": 0.07413456,
+    "laugh": 0.06266571,
+    "nod": 0.06519934,
+    "none": 0.06992848,
+    "sad": 0.07916686,
+    "think": 0.26455651,
+    "wave": 0.07266134
+   }
+  },
+  {
+   "text": "annemler sürpriz ziyarete geldi",
+   "emotion": "wave",
+   "scores": {
+    "bounce": 0.08263453,
+    "bow": 0.09954492,
+    "cheer": 0.07674721,
+    "clap": 0.10747894,
+    "dance": 0.11004178,
+    "laugh": 0.07411519,
+    "nod": 0.07398556,
+    "none": 0.08226173,
+    "sad": 0.07367327,
+    "think": 0.07976997,
+    "wave": 0.1397469
+   }
+  },
+  {
+   "text": "hiç enerjim kalmadı",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.06422139,
+    "bow": 0.0736719,
+    "cheer": 0.07765171,
+    "clap": 0.08817923,
+    "dance": 0.10591804,
+    "laugh": 0.07782144,
+    "nod": 0.0840221,
+    "none": 0.07943471,
+    "sad": 0.18250618,
+    "think": 0.08104456,
+    "wave": 0.08552873
+   }
+  },
+  {
+   "text": "sence ne yapmalıyım",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.07781676,
+    "bow": 0.07958982,
+    "cheer": 0.06691172,
+    "clap": 0.07523593,
+    "dance": 0.07583636,
+    "laugh": 0.0634575,
+    "nod": 0.0849444,
+    "none": 0.06797996,
+    "sad": 0.09038139,
+    "think": 0.24049368,
+    "wave": 0.0773525
+   }
+  },
+  {
+   "text": "acaba doğru mu yaptım",
+   "emotion": "think",
+   "scores": {
+    "bounce": 0.0651622,
+    "bow": 0.06304173,
+    "cheer": 0.09773352,
+    "clap": 0.08657108,
+    "dance": 0.07923576,
+    "laugh": 0.07270037,
+    "nod": 0.10454315,
+    "none": 0.08356804,
+    "sad": 0.0769152,
+    "think": 0.19363434,
+    "wave": 0.07689461
+   }
+  },
+  {
+   "text": "bugün hava harika keyfim yerinde",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.07564727,
+    "bow": 0.07118017,
+    "cheer": 0.21714044,
+    "clap": 0.09560464,
+    "dance": 0.07167101,
+    "laugh": 0.07303907,
+    "nod": 0.06740814,
+    "none": 0.08368763,
+    "sad": 0.10728581,
+    "think": 0.06565724,
+    "wave": 0.07167858
+   }
+  },
+  {
+   "text": "şarkı aç biraz",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.066733,
+    "bow": 0.07423917,
+    "cheer": 0.06651468,
+    "clap": 0.08044646,
+    "dance": 0.22605323,
+    "laugh": 0.07678583,
+    "nod": 0.06597289,
+    "none": 0.1352386,
+    "sad": 0.07120904,
+    "think": 0.06832481,
+    "wave": 0.0684823
+   }
+  },
+  {
+   "text": "grip oldum yataktayım",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.08630906,
+    "bow": 0.08022928,
+    "cheer": 0.09439127,
+    "clap": 0.08714651,
+    "dance": 0.07664135,
+    "laugh": 0.13064038,
+    "nod": 0.10088829,
+    "none": 0.09078765,
+    "sad": 0.08742862,
+    "think": 0.09185167,
+    "wave": 0.07368594
+   }
+  },
+  {
+   "text": "kendimi iyi hissetmiyorum",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.10958327,
+    "bow": 0.06624825,
+    "cheer": 0.07770412,
+    "clap": 0.0704634,
+    "dance": 0.11836952,
+    "laugh": 0.06730392,
+    "nod": 0.07741534,
+    "none": 0.06516064,
+    "sad": 0.19736037,
+    "think": 0.07763883,
+    "wave": 0.07275235
+   }
+  },
+  {
+   "text": "çok komiksin 😂",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.06627476,
+    "bow": 0.06290038,
+    "cheer": 0.07806472,
+    "clap": 0.06427125,
+    "dance": 0.05344222,
+    "laugh": 0.36927724,
+    "nod": 0.06484545,
+    "none": 0.06039744,
+    "sad": 0.06931156,
+    "think": 0.0540066,
+    "wave": 0.05720838
+   }
+  },
+  {
+   "text": "hiçbir şey yolunda değil",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.06648069,
+    "bow": 0.07397232,
+    "cheer": 0.07592484,
+    "clap": 0.08531922,
+    "dance": 0.07319453,
+    "laugh": 0.07268282,
+    "nod": 0.07677125,
+    "none": 0.08388327,
+    "sad": 0.224928,
+    "think": 0.09283996,
+    "wave": 0.0740031
+   }
+  },
+  {
+   "text": "müzik ruhun gıdası",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.0696356,
+    "bow": 0.0680869,
+    "cheer": 0.08026563,
+    "clap": 0.08546282,
+    "dance": 0.21525531,
+    "laugh": 0.08113912,
+    "nod": 0.06968907,
+    "none": 0.09525118,
+    "sad": 0.08705752,
+    "think": 0.07420238,
+    "wave": 0.07395447
+   }
+  },
+  {
+   "text": "eline sağlık",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.06319992,
+    "bow": 0.21730727,
+    "cheer": 0.06803947,
+    "clap": 0.14446872,
+    "dance": 0.0902089,
+    "laugh": 0.07125201,
+    "nod": 0.07490884,
+    "none": 0.06508815,
+    "sad": 0.06769711,
+    "think": 0.07213094,
+    "wave": 0.06569868
+   }
+  },
+  {
+   "text": "evet doğru söylüyorsun",
+   "emotion": "nod",
+   "scores": {
+    "bounce": 0.06493463,
+    "bow": 0.06403422,
+    "cheer": 0.10556241,
+    "clap": 0.08281077,
+    "dance": 0.07093258,
+    "laugh": 0.06687739,
+    "nod": 0.20188713,
+    "none": 0.07365098,
+    "sad": 0.06976535,
+    "think": 0.13284084,
+    "wave": 0.0667037
+   }
+  },
+  {
+   "text": "projeyi sonunda teslim ettim",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.06346187,
+    "bow": 0.08923615,
+    "cheer": 0.07459518,
+    "clap": 0.23726038,
+    "dance": 0.07229485,
+    "laugh": 0.06310496,
+    "nod": 0.07551625,
+    "none": 0.07738678,
+    "sad": 0.09821676,
+    "think": 0.0784567,
+    "wave": 0.07047012
+   }
+  },
+  {
+   "text": "dün geceden beri iyi değilim",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.07097455,
+    "bow": 0.06944788,
+    "cheer": 0.07845535,
+    "clap": 0.06999844,
+    "dance": 0.07669821,
+    "laugh": 0.05872001,
+    "nod": 0.06122695,
+    "none": 0.0631714,
+    "sad": 0.23967781,
+    "think": 0.11382699,
+    "wave": 0.09780242
+   }
+  },
+  {
+   "text": "sınavdan kaldım 😢",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.08483201,
+    "bow": 0.07153481,
+    "cheer": 0.09758755,
+    "clap": 0.09849728,
+    "dance": 0.07636172,
+    "laugh": 0.08431422,
+    "nod": 0.08907421,
+    "none": 0.10085056,
+    "sad": 0.11860813,
+    "think": 0.08205853,
+    "wave": 0.09628098
+   }
+  },
+  {
+   "text": "iyi ki varsın teşekkürler",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.07069866,
+    "bow": 0.3420739,
+    "cheer": 0.05766949,
+    "clap": 0.07147426,
+    "dance": 0.05871443,
+    "laugh": 0.06140747,
+    "nod": 0.07071612,
+    "none": 0.06833456,
+    "sad": 0.07233701,
+    "think": 0.05394045,
+    "wave": 0.07263364
+   }
+  },
+  {
+   "text": "kimse beni anlamıyor",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.11133799,
+    "bow": 0.06623754,
+    "cheer": 0.08763186,
+    "clap": 0.07204007,
+    "dance": 0.08242541,
+    "laugh": 0.09187492,
+    "nod": 0.09222682,
+    "none": 0.07128008,
+    "sad": 0.12111066,
+    "think": 0.11420722,
+    "wave": 0.08962745
+   }
+  },
+  {
+   "text": "bu akşam parti var",
+   "emotion": "none",
+   "scores": {
+    "bounce": 0.08795023,
+    "bow": 0.10320812,
+    "cheer": 0.07974811,
+    "clap": 0.08403165,
+    "dance": 0.08261042,
+    "laugh": 0.08308681,
+    "nod": 0.08902056,
+    "none": 0.12086534,
+    "sad": 0.08731309,
+    "think": 0.09861317,
+    "wave": 0.08355251
+   }
+  },
+  {
+   "text": "annem iyileşti çok sevindim",
+   "emotion": "cheer",
+   "scores": {
+    "bounce": 0.07165859,
+    "bow": 0.08196064,
+    "cheer": 0.20220343,
+    "clap": 0.08715276,
+    "dance": 0.06526133,
+    "laugh": 0.08159658,
+    "nod": 0.06853882,
+    "none": 0.07755822,
+    "sad": 0.11071387,
+    "think": 0.08459027,
+    "wave": 0.0687655
+   }
+  },
+  {
+   "text": "dedemi kaybettim",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.0688834,
+    "bow": 0.08594247,
+    "cheer": 0.10459465,
+    "clap": 0.11285487,
+    "dance": 0.07680063,
+    "laugh": 0.07439665,
+    "nod": 0.07311396,
+    "none": 0.09933368,
+    "sad": 0.13099688,
+    "think": 0.09195072,
+    "wave": 0.08113208
+   }
+  },
+  {
+   "text": "tebrikler çok güzel olmuş",
+   "emotion": "clap",
+   "scores": {
+    "bounce": 0.06934171,
+    "bow": 0.08781685,
+    "cheer": 0.12510915,
+    "clap": 0.19953415,
+    "dance": 0.06617674,
+    "laugh": 0.09034697,
+    "nod": 0.08262759,
+    "none": 0.05951303,
+    "sad": 0.07365328,
+    "think": 0.06628672,
+    "wave": 0.07959381
+   }
+  },
+  {
+   "text": "pek iyi değilim açıkçası",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.06445732,
+    "bow": 0.07374896,
+    "cheer": 0.06685988,
+    "clap": 0.07348745,
+    "dance": 0.09014849,
+    "laugh": 0.06663451,
+    "nod": 0.07681345,
+    "none": 0.07767419,
+    "sad": 0.24151331,
+    "think": 0.10647082,
+    "wave": 0.06219162
+   }
+  },
+  {
+   "text": "içim hiç rahat değil çok kırgınım",
+   "emotion": "sad",
+   "scores": {
+    "bounce": 0.06194375,
+    "bow": 0.08054478,
+    "cheer": 0.08963292,
+    "clap": 0.07178237,
+    "dance": 0.06774106,
+    "laugh": 0.11157795,
+    "nod": 0.0605645,
+    "none": 0.07431563,
+    "sad": 0.24921442,
+    "think": 0.07798173,
+    "wave": 0.05470089
+   }
+  },
+  {
+   "text": "sağ ol varol",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.07159007,
+    "bow": 0.23764067,
+    "cheer": 0.06745497,
+    "clap": 0.10345048,
+    "dance": 0.06999273,
+    "laugh": 0.07626314,
+    "nod": 0.07994347,
+    "none": 0.09373894,
+    "sad": 0.0647401,
+    "think": 0.07164695,
+    "wave": 0.06353848
+   }
+  },
+  {
+   "text": "saygılarımla",
+   "emotion": "bow",
+   "scores": {
+    "bounce": 0.07238584,
+    "bow": 0.23804504,
+    "cheer": 0.0710093,
+    "clap": 0.0790054,
+    "dance": 0.08351193,
+    "laugh": 0.06720976,
+    "nod": 0.063154,
+    "none": 0.08459555,
+    "sad": 0.07721598,
+    "think": 0.07335197,
+    "wave": 0.09051524
+   }
+  },
+  {
+   "text": "ahsjdksj öldüm",
+   "emotion": "laugh",
+   "scores": {
+    "bounce": 0.07066248,
+    "bow": 0.07228026,
+    "cheer": 0.07312074,
+    "clap": 0.08055084,
+    "dance": 0.07469251,
+    "laugh": 0.23679076,
+    "nod": 0.090071,
+    "none": 0.07738324,
+    "sad": 0.08442708,
+    "think": 0.07249556,
+    "wave": 0.06752551
+   }
+  },
+  {
+   "text": "ritmi hissediyorum",
+   "emotion": "dance",
+   "scores": {
+    "bounce": 0.10979634,
+    "bow": 0.06472321,
+    "cheer": 0.061375,
+    "clap": 0.06434464,
+    "dance": 0.22377913,
+    "laugh": 0.06579816,
+    "nod": 0.07517995,
+    "none": 0.06687369,
+    "sad": 0.12447735,
+    "think": 0.07894081,
+    "wave": 0.06471171
+   }
+  }
+ ]
+}

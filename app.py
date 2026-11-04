@@ -153,12 +153,9 @@ with st.sidebar:
         value=config.EMOTION_ENABLED,
         key="auto_emotion",
         disabled=not chunk_enabled,
-        help="Parçalar NoemaVibeAPI duygu servisine gönderilir; sonuç her parçanın kartında görünür.",
+        help="Parçaların avatar duygusu NoemaVibeEmotionAI modeliyle ölçülür; sonuç her parçanın kartında görünür.",
     )
-    st.caption(
-        f"Servis: `{config.EMOTION_API_URL}`" if config.EMOTION_API_URL
-        else "Servis: :red[EMOTION_API_URL .env'de tanımlı değil]"
-    )
+    st.caption(emotion_client.describe_backend())
 
     st.divider()
     if st.button("Sonuçları temizle", width="stretch"):

@@ -86,7 +86,7 @@ Ders analizi servisi kendi dosyasını kullanır: `services/lesson_analysis/.env
 | `SOURCE_DB_URL` | (boş) | MSSQL dışı veritabanları için SQLAlchemy URL'i; doluysa `MSSQL_*` yerine kullanılır |
 | `SOURCE_DB_LABEL` | (boş) | `source_uri`'de görünen ad (`db://<ad>/<tablo>/<kimlik>`); boşsa veritabanı adı |
 | `YTDLP_JS_RUNTIMES` | `deno,node` | YouTube imza çözümü için JS ortamı. Biri kurulu olmalı (Node ≥ 22); yoksa indirme HTTP 403 verir |
-| `EMOTION_API_URL` | — (zorunlu, örn. `http://127.0.0.1:31531`) | Parça duygu analizi: NoemaVibeAPI `nlp-service` (`POST /classifyEmotion`). Servis yalnızca 127.0.0.1'i dinlediği için uygulama NoemaVibeAPI ile aynı sunucuda çalışmalı. `EMOTION_API_CONCURRENCY` (varsayılan 8) eşzamanlı istek sayısı, `EMOTION_ENABLED=false` otomatik ölçümü kapatır |
+| `EMOTION_BACKEND` | — (zorunlu: `local` · `api`) | Parça duygu analizi. `local`: model uygulamanın içinde çalışır, `EMOTION_MODEL_PATH` (örn. `emotion_model/emotion-model.json`, göreli yol proje köküne göre) okunur. `api`: NoemaVibeAPI `nlp-service`'e (`EMOTION_API_URL`, `POST /classifyEmotion`) istek gider; servis yalnızca 127.0.0.1'i dinlediği için uygulama NoemaVibeAPI ile aynı sunucuda çalışmalı, `EMOTION_API_CONCURRENCY` eşzamanlı istek sayısıdır. `EMOTION_ENABLED=false` otomatik ölçümü kapatır |
 
 ## Veritabanı tablolarını parçalama
 
@@ -119,17 +119,23 @@ temizlenir. Başlık her parçanın embedding'ine bağlam olarak eklenir. Kısa 
 
 ## Parçaların duygu analizi
 
-Parçalar, NoemaVibeEmotionAI projesindeki duygu servisine gönderilip her parçanın duygusu (avatar hareketi) ölçülür.
+Her parçanın duygusu (avatar hareketi) NoemaVibeEmotionAI modeliyle ölçülür. Varsayılan `EMOTION_BACKEND=local`
+ile model bu uygulamanın içinde çalışır; ayrı bir servis gerekmez. Model `emotion_model/` klasöründedir:
+
+- `emotion-model.json` — model (karakter n-gram TF-IDF + lojistik regresyon, NoemaVibeEmotionAI `export_model.py` çıktısı)
+- `golden.json` — eğitim projesinin ürettiği beklenen tahminler; `tests/test_emotion_model.py` yerel sonuçların bunlarla
+  birebir aynı olduğunu doğrular
+
+Model güncellenince NoemaVibeEmotionAI `models/<deney>/` içindeki bu iki dosyayı `emotion_model/` klasörüne kopyalayıp
+testi çalıştırın:
 
 ```powershell
-# NoemaVibeEmotionAI klasöründe
-node js/server.js            # http://localhost:8080
+python -m pytest tests/test_emotion_model.py
 ```
 
 Kenar çubuğundaki **Parçaların duygusunu otomatik ölç** işaretliyse **Sonuçlar** sekmesinde her kaynağın duygu
-dağılımı ve her parça kartında duygu + güven görünür (düşük güvenliler işaretlenir). İşaretsizse ya da servis
-kapalıysa sonuçta **Duygu analizi yap** düğmesi çıkar. Gönderilen parçalar servisin kendi panelinde de
-(`http://localhost:8080/`) görülebilir.
+dağılımı ve her parça kartında duygu + güven görünür (düşük güvenliler işaretlenir). İşaretsizse ya da ölçüm
+başarısız olursa sonuçta **Duygu analizi yap** düğmesi çıkar.
 
 ## Kayıt: önizleme ya da otomatik
 

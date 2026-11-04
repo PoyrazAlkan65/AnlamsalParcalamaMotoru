@@ -128,10 +128,22 @@ QDRANT_PORT = _int("QDRANT_PORT")
 QDRANT_API_KEY = _str("QDRANT_API_KEY", required=False) or None
 QDRANT_COLLECTION = _str("QDRANT_COLLECTION", required=QDRANT_ENABLED)
 
-# ---- Duygu analizi (NoemaVibeAPI/nlp-service /classifyEmotion) ----
-# nlp-service yalnızca 127.0.0.1'i dinler; bu uygulama NoemaVibeAPI ile aynı sunucuda çalışmalı
+# ---- Duygu analizi (NoemaVibeEmotionAI avatar modeli) ----
+# local: model JSON'u bu süreçte çalışır (servis gerekmez)
+# api:   NoemaVibeAPI nlp-service /classifyEmotion; servis yalnızca 127.0.0.1'i dinler,
+#        bu yüzden uygulama NoemaVibeAPI ile aynı sunucuda çalışmalı
+EMOTION_BACKENDS = ("local", "api")
 EMOTION_ENABLED = _bool("EMOTION_ENABLED")
-EMOTION_API_URL = _str("EMOTION_API_URL")
+EMOTION_BACKEND = _str("EMOTION_BACKEND").lower()
+if EMOTION_BACKEND and EMOTION_BACKEND not in EMOTION_BACKENDS:
+    _invalid.append(f"EMOTION_BACKEND={EMOTION_BACKEND!r} (local · api)")
+_emotion_model_path = _str("EMOTION_MODEL_PATH", required=EMOTION_BACKEND == "local")
+# Göreli yol proje köküne göre çözülür
+EMOTION_MODEL_PATH = (
+    (Path(_emotion_model_path) if Path(_emotion_model_path).is_absolute() else ROOT_DIR / _emotion_model_path)
+    if _emotion_model_path else None
+)
+EMOTION_API_URL = _str("EMOTION_API_URL", required=EMOTION_BACKEND == "api")
 EMOTION_API_TIMEOUT = _float("EMOTION_API_TIMEOUT")
 EMOTION_API_CONCURRENCY = _int("EMOTION_API_CONCURRENCY")
 
